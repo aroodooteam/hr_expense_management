@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="hr_employee_advantage_type_fonction" model="hr.employee.advantage.type">
+            <field name="name">FONCTION</field>
+            <field name="rate">1.00</field>
+            <field name="code">F</field>
+        </record>
+        <record id="hr_employee_advantage_type_representation" model="hr.employee.advantage.type">
+            <field name="name">REPRESENTATION</field>
+            <field name="rate">0.00</field>
+            <field name="code">R</field>
+        </record>
+        <record id="hr_employee_advantage_type_telephone" model="hr.employee.advantage.type">
+            <field name="name">TELEPHONE</field>
+            <field name="rate">0.15</field>
+            <field name="code">T</field>
+        </record>
+        <record id="hr_employee_advantage_type_ik" model="hr.employee.advantage.type">
+            <field name="name">VOITURE</field>
+            <field name="rate">0.15</field>
+            <field name="code">V</field>
+        </record>
+        <record id="hr_employee_advantage_type_loyer" model="hr.employee.advantage.type">
+            <field name="name">LOYER</field>
+            <field name="rate">0.50</field>
+            <field name="code">L</field>
+        </record>
+        <record id="hr_employee_advantage_type_vf" model="hr.employee.advantage.type">
+            <field name="name">VOITURE DE FONCTION</field>
+            <field name="rate">0.15</field>
+            <field name="code">VF</field>
+        </record>
+    </data>
+</openerp>

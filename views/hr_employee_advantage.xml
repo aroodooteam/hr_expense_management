@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!-- Vue tree hr_employee_advantage -->
+    	<record id="hr_employee_advantage_tree" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.tree</field>
+            <field name="model">hr.employee.advantage</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Avantages">
+                    <field name="annee" />
+                    <field name="name"/>
+                    <!--field name="advantage_id"/>
+                    <field name="amount"/>
+                    <field name="state"/-->
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vue form hr_employee_advantage-->
+        <record id="hr_employee_advantage_form" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.form</field>
+            <field name="model">hr.employee.advantage</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avantages">
+                	<sheet>
+                		<h1>
+                            <label string="Type d'avantages"/>
+                        </h1>
+                        	<group col="2" colspan="2">
+                                <separator string="Général" colspan="2"/>
+                    			<field name="annee"/>
+                    			<field name="name"/>
+                                <field name="matricule"/>
+                                <field name="job_id"/>
+                                <field name="department_id"/>
+                            </group>
+                            <separator string="Avantages attribués" colspan="2"/>
+                            <field name="employee_advantage_line_ids" colspan="4" nolabel="1" context="{'default_employee_id': active_id}">
+                                <tree>
+                                    <!--field name="annee"/-->
+                                    <field name="name"/>
+                    		        <field name="amount"/>
+                                    <field name="advanced_amount"/>
+                                    <field name="remaining_amount"/>
+                    			    <field name="state"/>
+                    			    <!--field name="ref"/-->
+                                </tree>
+                                <form>
+                                    <group col="2" colspan="4">
+                                        <field name="annee"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="advanced_amount"/>
+                                        <field name="remaining_amount"/>
+                                        <field name="state"/>
+                                        <field name="ref"/>
+                                    </group>
+                                </form>
+                            </field>
+                	</sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action du menu hr_employee_advantage -->
+        <!--record model="ir.actions.act_window" id="hr_employee_advantage_act">
+            <field name="name">Avantages</field>
+            <field name="res_model">hr.employee.advantage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record-->
+
+        <!-- Action du menu Avantage-->
+        <record model="ir.actions.act_window" id="action_gestion_advantage">
+            <field name="name">Avantage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee.advantage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Créer une nouvelle carrière.
+                </p>
+            </field-->
+        </record>
+        
+
+        <!-- Menu Gestion des avantages-->
+        <menuitem action="action_gestion_advantage" id="menu_hr_employee_advantage" parent="menu_hr_employee_advantage_root"/>
+        <!--menuitem action="action_gestion_advantage_line" id="menu_hr_employee_advantage_line" parent="menu_hr_employee_advantage_root"/-->
+    </data>
+</openerp>

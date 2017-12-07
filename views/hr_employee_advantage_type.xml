@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<!-- Vue tree employee_advantage_type-->
+    	<record id="hr_employee_advantage_type_tree" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.type.tree</field>
+            <field name="model">hr.employee.advantage.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Types avantages">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vue form employee_advantage_type -->
+        <record id="hr_employee_advantage_type_form" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.type.form</field>
+            <field name="model">hr.employee.advantage.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Types avantages">
+                	<sheet>
+                		<h1>
+                            <label string="Type d'avantages"/>
+                        </h1>
+                        	<group col="2" colspan="2">
+                    			<field name="name" />
+                    			<field name="code" />
+                    			<field name="rate"/>
+                    		</group>
+                	</sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action du menu type advantage-->
+        <record model="ir.actions.act_window" id="hr_employee_advantage_type_act">
+            <field name="name">Type d'avantages</field>
+            <field name="res_model">hr.employee.advantage.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="hr_employee_advantage_type_act" id="menu_hr_employee_advantage_type"
+                parent="hr.menu_hr_configuration" />
+
+
+    </data>
+</openerp>

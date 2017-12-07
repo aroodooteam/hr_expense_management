@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!-- Vue tree hr_employee_advantage_line-->
+    	<record id="hr_employee_advantage_line_tree" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.line.tree</field>
+            <field name="model">hr.employee.advantage.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Avantages">
+                    <field name="annee"/>
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="advanced_amount"/>
+                    <field name="remaining_amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vue form hr_employee_advantage-->
+        <record id="hr_employee_advantage_line__form" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.line.form</field>
+            <field name="model">hr.employee.advantage.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avantages">
+                    <sheet>
+                        <h1>
+                            <label string="Avantages attribués"/>
+                        </h1>
+                        <group col="2" colspan="2">
+                            <separator string="Général" colspan="2"/>
+                	        <field name="annee" />
+                            <field name="employee_id"/>
+                            <field name="name"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <separator string="Situation du compte" colspan="2"/>
+                            <field name="amount"/>
+                            <field name="advanced_amount"/>
+                            <field name="remaining_amount"/>
+                            <field name="state"/>
+                        </group>
+                        <notebook>
+                            <page string="Avantages demandés">
+                                <field name="employee_advantage_request_ids" nolabel="1" context="{'default_employee_id': active_id}">
+                                    <tree string="Avantages">
+                                        <!--field name="employee_id"/-->
+                                        <field name="date"/>
+                                        <field name="cr_number"/>
+                                        <!--field name="advantage_id"/-->
+                                        <field name="request_amount"/>
+                                        <field name="observation"/>
+                                    </tree>
+                                    <form string="Avantages">
+                                        <group col="2" colspan="2">
+                                            <field name="employee_id" />
+                                            <field name="advantage_id"/>
+                                            <field name="amount"/>
+                                            <field name="advanced_amount"/>
+                                            <field name="remaining_amount"/>
+                                            <field name="date"/>
+                                            <field name="cr_number"/>
+                                            <field name="request_amount"/>
+                                            <field name="observation"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            
+                        </notebook>
+                </sheet>
+                </form>
+            </field>
+         </record>
+
+         <!-- Vue Recherche -->
+         <record id="hr_employee_advantage_line_search" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.line.search</field>
+            <field name="model">hr.employee.advantage.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Avantage">
+                    <field name="annee" />
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="advanced_amount"/>
+                    <field name="remaining_amount"/>
+                    <field name="state"/>
+                        <group string="Group By…">
+                        <filter string="Année" name="group_annee" icon="terp-personal" domain="[]"
+                            context="{'group_by':'annee'}"/>
+                        <filter string="Employé" name="group_employee" icon="terp-personal" domain="[]"
+                            context="{'group_by':'employee_id'}"/>
+                        <filter string="Avantage" name="group_advantage" icon="terp-personal" domain="[]"
+                            context="{'group_by':'name'}"/>
+                        </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action du menu hr_employee_advantage_line-->
+        <record model="ir.actions.act_window" id="action_gestion_advantage_line">
+            <field name="name">Détail Avantage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee.advantage.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <!--field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Créer une nouvelle carrière.
+                </p>
+            </field-->
+        </record>
+
+         <!-- Menu -->
+         <menuitem action="action_gestion_advantage_line" id="menu_hr_employee_advantage_line" parent="menu_hr_employee_advantage_root"/>
+    </data>
+</openerp>

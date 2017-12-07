@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!-- Vue form hr_employee_advantage_request-->
+        <record id="hr_employee_advantage_request_form" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.request.form</field>
+            <field name="model">hr.employee.advantage.request</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avantages">
+                    <sheet>
+                        <h1>
+                            <label string="Formulaire de demande de remboursement"/>
+                        </h1>
+                        <group col="2" colspan="2">
+                            <separator string="Général" colspan="2"/>
+                	        <field name="employee_id"/>
+                            <field name="advantage_id"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <separator string="Situation du compte" colspan="2"/>
+                            <field name="amount"/>
+                            <field name="advanced_amount"/>
+                            <field name="remaining_amount"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <separator string="Détails de la demande" colspan="2"/>
+                            <field name="date"/>
+                            <field name="cr_number"/>
+                            <field name="request_amount"/>
+                            <field name="observation"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+         </record>
+
+         <!-- Vue tree hr_employee_advantage_request-->
+        <record id="hr_employee_advantage_request_tree" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.request.tree</field>
+            <field name="model">hr.employee.advantage.request</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Avantages">
+                    <field name="employee_id" />
+                    <field name="date"/>
+                    <field name="cr_number"/>
+                    <field name="advantage_id"/>
+                    <!--field name="amount"/>
+                    <field name="advanced_amount"/>
+                    <field name="remaining_amount"/-->
+                    <field name="request_amount"/>
+                    <!--field name="observation"/-->
+                </tree>
+            </field>
+        </record>
+
+         <!-- Action du menu hr_employee_advantage_request-->
+        <record model="ir.actions.act_window" id="action_gestion_advantage_request">
+            <field name="name">Remboursement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee.advantage.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Créer une nouvelle carrière.
+                </p>
+            </field-->
+        </record>
+
+         <!-- Menu -->
+         <menuitem action="action_gestion_advantage_request" id="menu_hr_employee_advantage_request" parent="menu_hr_employee_advantage_root"/>
+    </data>
+</openerp>

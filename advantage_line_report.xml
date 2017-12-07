@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <report
+            id="hr_expense_advantage_line"
+            model="hr.employee.advantage.line"
+            string="Détail des remboursements"
+            report_type="qweb-pdf"
+            name="hr_expense_management.hr_expense_report_advantage_line"
+            file="hr_expense_management.hr_expense_report_advantage_line"
+        />
+        <template id="hr_expense_report_advantage_line">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                        <div class ="page">
+                            <style type="text/css">
+                                [class*="col-"] {
+                                font-size:11;
+                                }
+                                h2 {text-align: center;font-size: 26; color:red;font-weight: bold;}
+                                h3 {font-size: 20;  font-weight: bold; color:blue;}
+                                h4 {font-size: 20;  font-weight: bold; color:blue;}
+                                h5 {text-align: center;font-size: 20; font-weight: bold;}
+                            </style>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h2>SITUATION DES FRAIS REMBOURSES</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h3>Général:</h3>
+                                        <p><b>Année:</b> <span t-field="doc.annee"/></p>
+                                        <p><b>Employé:</b> <span t-field="doc.employee_id"/></p>
+                                        <p><b>Type d'avantage:</b> <span t-field="doc.name"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h4>Situation du compte:</h4>
+                                        <p><b>Montant attribué:</b> <span t-field="doc.amount"/></p>
+                                        <p><b>Montant avancé:</b> <span t-field="doc.advanced_amount"/></p>
+                                        <p><b>Montant restant:</b> <span t-field="doc.remaining_amount"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>Détail des remboursements:</h5>
+                            <ul>
+                                <div class ="container">
+                                    <div class="row">
+                                        <div>
+                                            <div class = "col-xs-2 text-left"><b>Envoyé le</b></div>
+                                            <div class = "col-xs-2 text-left"><b>Numéro CR</b></div>
+                                            <div class = "col-xs-2 text-left"><b>Montant demandé</b></div>
+                                            <div class = "col-xs-6 text-left"><b>Motif</b></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <t t-foreach="doc.employee_advantage_request_ids" t-as="demande">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-xs-2 text-left">
+                                                <span t-field="demande.date"/>
+                                            </div>
+                                            <div class="col-xs-2 text-left">
+                                                <span t-field="demande.cr_number"/>
+                                            </div>
+                                            <div class="col-xs-2 text-left">
+                                                <span t-field="demande.request_amount"/>
+                                            </div>
+                                            <div class="col-xs-6 text-left">
+                                                <span t-field="demande.observation"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </ul>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
