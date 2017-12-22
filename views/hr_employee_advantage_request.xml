@@ -8,6 +8,24 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Avantages">
+                    <header>
+                        <!--<button name="action_confirm" type="object" states="draft" string="Confirmer la demande" groups="base.group_user" class="oe_highlight"/>-->
+                        <button name="action_confirm" type="object"
+                                attrs="{'invisible':['|','&amp;',('current_user','=',False),('state','=', 'draft'),('state','!=', 'draft'),]}"
+                                string="Confirmer la demande" groups="base.group_user" class="oe_highlight"/>
+                        <button name="reset_to_draft" type="object" 
+                                attrs="{'invisible':['|','&amp;',('current_user','=',False),('state','=', 'confirmed'),('state','!=', 'draft')]}"
+                                string="Remettre en brouillon" groups="base.group_user"/>
+                        <button name="validate_dRPAS" type="object" states="confirmed" string="Validation divRPAS"
+                                groups="base.group_hr_manager"
+                                class="oe_highlight"/>
+                        <button name="refuse" type="object" states="confirmed" string="Refuser" groups="base.group_hr_manager" class="oe_highlight"/>
+                        <button name="validate_DRH" type="object" states="validate1" string="Validation DRH" groups="base.group_hr_manager" class="oe_highlight"/>
+                        <button name="validate_CPTE" type="object" states="validate2" string="Valider" groups="base.group_user" class="oe_highlight"/>
+                        <!--button name="check_employee_request" type="object" states="draft" string="Test User id" groups="base.group_user"/>
+                        <button name="test_user" string="Test Solofo" attrs="{'invisible':[('current_user','=',False)]}" groups="base.group_user"/-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,validate1,validate2,validate3,done,cancel"/>
+                    </header>
                     <sheet>
                         <h1>
                             <label string="Formulaire de demande de remboursement"/>
@@ -16,14 +34,16 @@
                             <separator string="Général" colspan="2"/>
                 	        <field name="employee_id"/>
                             <field name="advantage_id"/>
+                            <!--field name="user_request_id"/-->
+                            <field name="current_user"/>
                         </group>
-                        <group col="2" colspan="2">
+                        <group col="2" colspan="2" attrs="{'invisible':[('current_user','=',False)]}">
                             <separator string="Situation du compte" colspan="2"/>
                             <field name="amount"/>
                             <field name="advanced_amount"/>
                             <field name="remaining_amount"/>
                         </group>
-                        <group col="2" colspan="2">
+                        <group col="2" colspan="2" attrs="{'invisible':[('current_user','=',False)]}">
                             <separator string="Détails de la demande" colspan="2"/>
                             <field name="date"/>
                             <field name="cr_number"/>
@@ -51,6 +71,7 @@
                     <field name="remaining_amount"/-->
                     <field name="request_amount"/>
                     <!--field name="observation"/-->
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -70,6 +91,9 @@
         </record>
 
          <!-- Menu -->
-         <menuitem action="action_gestion_advantage_request" id="menu_hr_employee_advantage_request" parent="menu_hr_employee_advantage_root"/>
+         <menuitem action="action_gestion_advantage_request" 
+                   id="menu_hr_employee_advantage_request" 
+                   parent="menu_hr_employee_advantage_root"
+                   groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
     </data>
 </openerp>

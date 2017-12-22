@@ -10,9 +10,9 @@
                 <tree string="Avantages">
                     <field name="annee" />
                     <field name="name"/>
-                    <!--field name="advantage_id"/>
-                    <field name="amount"/>
-                    <field name="state"/-->
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <!--field name="state"/-->
                 </tree>
             </field>
         </record>
@@ -35,9 +35,14 @@
                                 <field name="matricule"/>
                                 <field name="job_id"/>
                                 <field name="department_id"/>
+                                <field name="user_id"/>
+                                <field name="current_user_id"/>
+                                <!--field name="employee_user_id"/-->
+
                             </group>
                             <separator string="Avantages attribués" colspan="2"/>
-                            <field name="employee_advantage_line_ids" colspan="4" nolabel="1" context="{'default_employee_id': active_id}">
+                            <field name="employee_advantage_line_ids" colspan="4" nolabel="1" 
+                                   context="{'default_employee_id': active_id}">
                                 <tree>
                                     <!--field name="annee"/-->
                                     <field name="name"/>
@@ -64,6 +69,28 @@
             </field>
         </record>
 
+        <!-- Vue Recherche hr_employee_advantage -->
+
+        <record id="hr_employee_advantage_search" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.search</field>
+            <field name="model">hr.employee.advantage</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Advantage">
+                    <field name="annee"/>
+                    <field name="name"/>
+                    <!--field name="branche_id"/>
+                    <field name="module_id"/-->
+                        <group string="Group By…">
+                        <filter string="Année" name="group_annee" icon="terp-personal" domain="[]"
+                            context="{'group_by':'annee'}"/>
+                        <filter string="Nom" name="group_name" icon="terp-personal" domain="[]"
+                            context="{'group_by':'name'}"/>
+                        </group>
+                </search>
+            </field>
+        </record>
+
         <!-- Action du menu hr_employee_advantage -->
         <!--record model="ir.actions.act_window" id="hr_employee_advantage_act">
             <field name="name">Avantages</field>
@@ -78,7 +105,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.employee.advantage</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
             <!--field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Créer une nouvelle carrière.
@@ -88,7 +115,10 @@
         
 
         <!-- Menu Gestion des avantages-->
-        <menuitem action="action_gestion_advantage" id="menu_hr_employee_advantage" parent="menu_hr_employee_advantage_root"/>
+        <menuitem action="action_gestion_advantage" 
+                  id="menu_hr_employee_advantage" 
+                  parent="menu_hr_employee_advantage_root"
+                  groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
         <!--menuitem action="action_gestion_advantage_line" id="menu_hr_employee_advantage_line" parent="menu_hr_employee_advantage_root"/-->
     </data>
 </openerp>
