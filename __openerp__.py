@@ -32,18 +32,18 @@
     'website': 'http://www.aro.mg',
     'depends': ['base', 'hr', 'aro_hr', 'gestion_aro_rh'],
     'data': [
+        'views/common_menu.xml',
         'views/hr_employee_advantage_type.xml',
         'views/hr_employee_advantage.xml',
         'views/hr_employee_advantage_line.xml',
         'views/hr_employee_advantage_request.xml',
         'views/hr_employee_inherit.xml',
-        'views/common_menu.xml',
         'employee_advantage_report.xml',
         'advantage_line_report.xml',
         'data/hr_employee_advantage_type_data.xml',
-    
+
     ],
-    
+
     'installable': True,
     'auto_install': False,
     'application': False,
