@@ -34,7 +34,7 @@
                             <separator string="Général" colspan="2"/>
                 	        <field name="employee_id"/>
                             <field name="advantage_id"/>
-                            <!--field name="user_request_id"/-->
+                            <field name="user_request_id"/>
                             <field name="current_user"/>
                         </group>
                         <group col="2" colspan="2" attrs="{'invisible':[('current_user','=',False)]}">
@@ -43,13 +43,29 @@
                             <field name="advanced_amount"/>
                             <field name="remaining_amount"/>
                         </group>
-                        <group col="2" colspan="2" attrs="{'invisible':[('current_user','=',False)]}">
-                            <separator string="Détails de la demande" colspan="2"/>
-                            <field name="date"/>
-                            <field name="cr_number"/>
-                            <field name="request_amount"/>
-                            <field name="observation"/>
-                        </group>
+                        <notebook colspan="4">
+                            <page string="Demande">
+                                <group attrs="{'invisible':[('current_user','=',False)]}">
+                                    <separator string="Détails de la demande" colspan="2"/>
+                                        <group col="4" colspan="4">
+                                            <field name="date"/>
+                                            <field name="cr_number"/>
+                                        </group>
+                                        <group col="2" colspan="2">
+                                            <field name="request_amount"/>
+                                            <field name="employee_awarded_amount"/>
+                                            <field name="observation"/>
+                                        </group>
+                                </group>
+                            </page>
+                            <page string="Réservée à l'administration">
+                                <group col ="2" colspan="2" groups="base.group_hr_manager">
+                                    <separator string="Observation de l'administration" colspan="2"/>
+                                        <field name="drh_awarded_amount"/>
+                                        <field name="drh_observation"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

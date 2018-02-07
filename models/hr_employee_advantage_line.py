@@ -18,7 +18,7 @@ class HrEmployeeAdvantageLine(models.Model):
     state = fields.Selection((('add', 'Attribuer'), ('remove', 'Consommer'), ('cancel', 'Annuler')), 'Action')
     ref = fields.Char(string=u'Référence')
     employee_advantage_request_ids = fields.One2many('hr.employee.advantage.request','employee_id', string=u'Avantage demandé')
-    employee_user_id = fields.Many2one(related='employee_id.user_id', string='User id')
+    employee_user_id = fields.Many2one(related='employee_id.user_id', string='User id',store=True)
     current_user= fields.Boolean(string='Current user', compute='is_current_user')
 
     @api.multi
