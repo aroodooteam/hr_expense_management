@@ -41,6 +41,8 @@
         'employee_advantage_report.xml',
         'advantage_line_report.xml',
         'data/hr_employee_advantage_type_data.xml',
+        'security/hr_employee_advantage_request_security.xml',
+        'security/ir.model.access.csv',
 
     ],
 

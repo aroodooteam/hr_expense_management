@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_advantage_user,hr.employee.advantage.user,model_hr_employee_advantage,base.group_hr_user,1,0,0,0
+access_hr_employee_advantage_manager,hr.employee.advantage.manager,model_hr_employee_advantage,base.group_hr_manager,1,1,1,1
+access_hr_employee_advantage_line_user,hr.employee.advantage.line.user,model_hr_employee_advantage_line,base.group_hr_user,1,0,0,0
+access_hr_employee_advantage_line_manager,hr.employee.advantage.line.manager,model_hr_employee_advantage_line,base.group_hr_manager,1,1,1,1
+access_hr_employee_advantage_request_user,hr.employee.advantage.request.user,model_hr_employee_advantage_request,base.group_hr_user,1,0,0,0
+access_hr_employee_advantage_request_manager,hr.employee.advantage.request.manager,model_hr_employee_advantage_request,base.group_hr_manager,1,1,1,0

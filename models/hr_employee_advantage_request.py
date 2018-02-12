@@ -18,7 +18,7 @@ class HrEmployeeAdvantageRequest(models.Model):
     date = fields.Datetime(string=u'Envoyé le',required=True)
     cr_number = fields.Char(string=u'Numéro CR')
     request_amount = fields.Float(string=u'Montant demandé',required=True)
-    drh_awarded_amount = fields.Float(string=u'Montant accordé',required=True)
+    drh_awarded_amount = fields.Float(string=u'Montant accordé')
     observation = fields.Text(string='Motif',required=True)
     drh_observation = fields.Text(string='Observations')
     employee_awarded_amount = fields.Float(string=u'Montant accordé',readonly=True,default=0.0,digits=(8, 2),compute='awarded_amount')
