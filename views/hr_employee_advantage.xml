@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    	<!-- Vue tree hr_employee_advantage -->
-    	<record id="hr_employee_advantage_tree" model="ir.ui.view">
+        <!-- Vue tree hr_employee_advantage -->
+        <record id="hr_employee_advantage_tree" model="ir.ui.view">
             <field name="name">hr.employee.advantage.tree</field>
             <field name="model">hr.employee.advantage</field>
             <field name="type">tree</field>
@@ -24,14 +24,14 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Avantages">
-                	<sheet>
-                		<h1>
+                    <sheet class="oe_form_sheet_full_screen">
+                        <h1>
                             <label string="Type d'avantages"/>
                         </h1>
-                        	<group col="2" colspan="2">
+                            <group col="2" colspan="2">
                                 <separator string="Général" colspan="2"/>
-                    			<field name="annee"/>
-                    			<field name="name"/>
+                                <field name="annee"/>
+                                <field name="name"/>
                                 <field name="matricule"/>
                                 <field name="job_id"/>
                                 <field name="department_id"/>
@@ -43,14 +43,14 @@
                             <separator string="Avantages attribués" colspan="2"/>
                             <field name="employee_advantage_line_ids" colspan="4" nolabel="1" 
                                    context="{'default_employee_id': active_id}">
-                                <tree>
+                                <tree editable="top">
                                     <!--field name="annee"/-->
                                     <field name="name"/>
-                    		        <field name="amount"/>
+                                    <field name="amount"/>
                                     <field name="advanced_amount"/>
                                     <field name="remaining_amount"/>
-                    			    <field name="state"/>
-                    			    <!--field name="ref"/-->
+                                    <field name="state"/>
+                                    <!--field name="ref"/-->
                                 </tree>
                                 <form>
                                     <group col="2" colspan="4">
@@ -64,7 +64,7 @@
                                     </group>
                                 </form>
                             </field>
-                	</sheet>
+                    </sheet>
                 </form>
             </field>
         </record>

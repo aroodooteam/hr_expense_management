@@ -33,6 +33,7 @@ class HrEmployeeAdvantage(models.Model):
     employee_name_id=fields.Char(compute='get_name_id',string='Name id')
     user_id = fields.Many2one('res.users',string='User', related='name.user_id',store=True)
     current_user_id= fields.Boolean(string='Current user', compute='is_current_user')
+    montant_mensuel = fields.Float(string='Montant mensuel',required=False, readonly=False,default=0.0,digits=(8, 2))
 
     #_sql_constraints = [('name_uniq', 'unique(name)', _('The name must be unique !'))]
     _sql_constraints = [('name_annee_uniq', 'unique(annee,name)', _(u'Vous avez déja saisi les avantages de cet employé !'))]
@@ -80,4 +81,8 @@ class HrEmployeeAdvantage(models.Model):
         nid=self.name.id
         for emp in self:
             emp.employee_name_id=nid
+
+    
+
+            
 
