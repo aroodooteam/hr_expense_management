@@ -115,7 +115,7 @@ class HrEmployeeAdvantageRequest(models.Model):
             #if emp_request.employee_id.employee_user_id == emp_request.user_request_id :
             if not emp_request.employee_id.employee_user_id or emp_request.employee_id.employee_user_id == emp_request.user_request_id:
                emp_request.current_user = True
-            elif emp_request.employee_id.employee_user_id != emp_request.user_request_id :
+            elif emp_request.employee_id.employee_user_id != emp_request.user_request_id and manager == False :
                raise exceptions.ValidationError(u"Vous ne pouvez pas saisir les remboursements d\'une tierce personne")
                emp_request.current_user = False
                

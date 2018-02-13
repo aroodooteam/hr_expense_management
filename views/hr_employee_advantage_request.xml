@@ -78,7 +78,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Avantages">
-                    <field name="employee_id" />
+                    <field name="employee_id"/>
                     <field name="date"/>
                     <field name="cr_number"/>
                     <field name="advantage_id"/>
@@ -92,13 +92,30 @@
             </field>
         </record>
 
+         <!-- Vue Recherche -->
+         <record id="hr_employee_advantage_request_search" model="ir.ui.view">
+            <field name="name">hr.employee.advantage.request.search</field>
+            <field name="model">hr.employee.advantage.request</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Advantage">
+                     <field name="advantage_id"/>
+                     <field name="state"/>
+                        <group string="Group By…">
+                            <filter string="Etat" name="group_state" icon="terp-personal" domain="[]"
+                            context="{'group_by':'state'}"/>
+                        </group>
+                </search>
+            </field>
+        </record>
+
          <!-- Action du menu hr_employee_advantage_request-->
         <record model="ir.actions.act_window" id="action_gestion_advantage_request">
             <field name="name">Remboursement</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.employee.advantage.request</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
             <!--field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Créer une nouvelle carrière.
