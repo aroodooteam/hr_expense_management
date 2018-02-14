@@ -38,13 +38,14 @@
                             <field name="employee_user_id"/>
                             <field name="current_user"/>
                         </group>
-                        <group col="2" colspan="2">
                             <separator string="Situation du compte" colspan="2"/>
-                            <field name="amount"/>
-                            <field name="advanced_amount"/>
-                            <field name="remaining_amount"/>
-                            <field name="state"/>
-                        </group>
+                            <group col="4" colspan="4">
+                                <field name="amount"/>
+                                <field name="advanced_amount"/>
+                                <field name="remaining_amount"/>
+                                <field name="state"/>
+                                <field name="monthly_amount"/>
+                            </group>
                         <notebook>
                             <page string="Avantages demandés">
                                 <field name="employee_advantage_request_ids" nolabel="1" context="{'default_employee_id': active_id}">

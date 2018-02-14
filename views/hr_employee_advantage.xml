@@ -49,6 +49,7 @@
                                     <field name="amount"/>
                                     <field name="advanced_amount"/>
                                     <field name="remaining_amount"/>
+                                    <field name="monthly_amount"/>
                                     <field name="state"/>
                                     <!--field name="ref"/-->
                                 </tree>
@@ -59,6 +60,7 @@
                                         <field name="amount"/>
                                         <field name="advanced_amount"/>
                                         <field name="remaining_amount"/>
+                                        <field name="monthly_amount"/>
                                         <field name="state"/>
                                         <field name="ref"/>
                                     </group>

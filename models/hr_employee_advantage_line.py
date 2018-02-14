@@ -15,6 +15,7 @@ class HrEmployeeAdvantageLine(models.Model):
     amount = fields.Float(string=u'Montant attribué',digits=(8, 2))
     advanced_amount = fields.Float(string=u'Montant avancé',digits=(8, 2),compute='get_advanced_amount')
     remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount')
+    monthly_amount = fields.Float(string='Montant mensuel',readonly=False,default=0.0, store=True,digits=(8, 2), compute='_onchange_amount')
     state = fields.Selection((('add', 'Attribuer'), ('remove', 'Consommer'), ('cancel', 'Annuler')), 'Action')
     ref = fields.Char(string=u'Référence')
     employee_advantage_request_ids = fields.One2many('hr.employee.advantage.request','employee_id', string=u'Avantage demandé')
@@ -71,3 +72,8 @@ class HrEmployeeAdvantageLine(models.Model):
             else:
                 emp.current_user = False
                 raise exceptions.ValidationError(u"Vous n êtes pas autorisé à consulter les avantages d une tierce personne")
+
+    @api.depends('amount')
+    def _onchange_amount(self):
+        for montant in self:
+            montant.monthly_amount = montant.amount/12 
