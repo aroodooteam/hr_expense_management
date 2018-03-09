@@ -37,7 +37,8 @@ class HrEmployeeAdvantage(models.Model):
 
     #_sql_constraints = [('name_uniq', 'unique(name)', _('The name must be unique !'))]
     _sql_constraints = [('name_annee_uniq', 'unique(annee,name)', _(u'Vous avez déja saisi les avantages de cet employé !'))]
-
+    
+    
 
     @api.multi
     def is_current_user(self):

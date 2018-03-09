@@ -11,7 +11,8 @@ class HrEmployeeAdvantageRequest(models.Model):
 
     user_request_id = fields.Many2one('res.users', string='User ID', default=lambda self: self.env.user)
     employee_id = fields.Many2one('hr.employee.advantage.line', string=u'Employé')
-    advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True,required=True)
+    #advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True,required=True)
+    advantage_id = fields.Many2one(related='employee_id.name',string='Avantage',readonly=True,required=True,store=True)
     amount = fields.Float(related='employee_id.amount',string=u'Montant attribué',digits=(8, 2),readonly=True)
     advanced_amount = fields.Float(related='employee_id.advanced_amount',string=u'Montant avancé',digits=(8, 2))
     remaining_amount = fields.Float(related='employee_id.remaining_amount',string='Montant restant',digits=(8, 2))
@@ -31,8 +32,22 @@ class HrEmployeeAdvantageRequest(models.Model):
         ('validate2', 'DRH'),
         ('validate3','Comptabilité')], default='draft')
     current_user = fields.Boolean(string='Current user', compute='is_current_user_test',default=True)
+    payment_method = fields.Selection(string=u'Paiement souhaité',required=False,selection=[('especes', 'Espèces'), ('cheque', 'Chèque'),('virement','Virement bancaire'),('comte','Compte personnel')])
     #actuel_user = fields.Boolean(string='Utilisateur courant',compute='is_current_user',default=True)
-   
+    attachment = fields.Boolean(string=u'Pièces jointes', default=False)
+    car_number = fields.Char(string='Immatriculation')
+    period = fields.Char(string=u'Période')
+    start_counter = fields.Float(string=u'Début du mois',digits=(8, 2))
+    end_counter = fields.Float(string=u'Fin du mois',digits=(8, 2))
+    traveled_distance = fields.Float(string=u'Kilométrage parcouru',digits=(8,2))
+    km_rate = fields.Float(string=u'Taux par km',digits=(8,2))
+    car_request_amount = fields.Float(string=u'Montant à rembourser',digits=(8,2))
+    car_count = fields.Float(string=u'Compte voiture',digits=(8, 2))
+    personal_count = fields.Float(string=u'Compte personnel',digits=(8, 2))
+    other_count = fields.Float(string=u'Autres',digits=(8, 2))
+    check_out = fields.Float(string=u'Caisse',digits=(8, 2))
+    total_count = fields.Float(string=u'Total',digits=(8, 2))
+
 
     @api.constrains('request_amount')
     def _check_request_amount(self):

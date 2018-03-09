@@ -47,16 +47,43 @@
                             <page string="Demande">
                                 <group attrs="{'invisible':[('current_user','=',False)]}">
                                     <separator string="Détails de la demande" colspan="2"/>
-                                        <group col="4" colspan="4">
+                                        <group col="6" colspan="6">
                                             <field name="date"/>
+                                            <field name="attachment"/>
                                             <field name="cr_number"/>
+                                        <!--/group-->
+                                        <!--group col="4" colspan="4"-->
+                                            <field name="request_amount"/>
+                                            <field name="payment_method"/>
                                         </group>
                                         <group col="2" colspan="2">
-                                            <field name="request_amount"/>
                                             <field name="employee_awarded_amount"/>
                                             <field name="observation"/>
                                         </group>
                                 </group>
+                            </page>
+                            <page string="Formulaire d'imputation">
+                                    <separator string="Détails de la demande" colspan="2"/>
+                                        <group col="4" colspan="4">
+                                            <field name="car_number"/>
+                                            <field name="period"/>
+                                        </group>
+                                    <separator string="Relevé compteur kilométrique" colspan="2"/>
+                                        <group col="6" colspan="6">
+                                            <field name="start_counter"/>
+                                            <field name="end_counter"/>
+                                            <field name="traveled_distance"/>
+                                            <field name="km_rate"/>
+                                            <field name="car_request_amount"/>
+                                        </group>
+                                    <separator string="Imputation" colspan="2"/>
+                                        <group col="2" colspan="2">
+                                            <field name="car_count"/>
+                                            <field name="personal_count"/>
+                                            <field name="other_count"/>
+                                            <field name="check_out"/>
+                                            <field name="total_count"/>
+                                        </group>
                             </page>
                             <page string="Réservée à l'administration">
                                 <group col ="2" colspan="2" groups="base.group_hr_manager">
