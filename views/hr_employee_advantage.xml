@@ -12,7 +12,7 @@
                     <field name="name"/>
                     <field name="job_id"/>
                     <field name="department_id"/>
-                    <!--field name="state"/-->
+                    <!--field name="current_user_id"/-->
                 </tree>
             </field>
         </record>
@@ -37,8 +37,6 @@
                                 <field name="department_id"/>
                                 <field name="user_id"/>
                                 <field name="current_user_id"/>
-                                <!--field name="employee_user_id"/-->
-
                             </group>
                             <separator string="Avantages attribués" colspan="2"/>
                             <field name="employee_advantage_line_ids" colspan="4" nolabel="1" 
@@ -91,15 +89,7 @@
                         </group>
                 </search>
             </field>
-        </record>
-
-        <!-- Action du menu hr_employee_advantage -->
-        <!--record model="ir.actions.act_window" id="hr_employee_advantage_act">
-            <field name="name">Avantages</field>
-            <field name="res_model">hr.employee.advantage</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field>
-        </record-->
+        </record>       
 
         <!-- Action du menu Avantage-->
         <record model="ir.actions.act_window" id="action_gestion_advantage">
@@ -108,11 +98,7 @@
             <field name="res_model">hr.employee.advantage</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,search</field>
-            <!--field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Créer une nouvelle carrière.
-                </p>
-            </field-->
+            <!--field name="domain">[('current_user_id','=',True)]</field-->
         </record>
         
 
@@ -121,6 +107,5 @@
                   id="menu_hr_employee_advantage" 
                   parent="menu_hr_employee_advantage_root"
                   groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
-        <!--menuitem action="action_gestion_advantage_line" id="menu_hr_employee_advantage_line" parent="menu_hr_employee_advantage_root"/-->
     </data>
 </openerp>

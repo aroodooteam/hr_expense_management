@@ -11,8 +11,8 @@ class HrEmployeeAdvantageRequest(models.Model):
 
     user_request_id = fields.Many2one('res.users', string='User ID', default=lambda self: self.env.user)
     employee_id = fields.Many2one('hr.employee.advantage.line', string=u'Employé')
-    #advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True,required=True)
-    advantage_id = fields.Many2one(related='employee_id.name',string='Avantage',readonly=True,required=True,store=True)
+    #advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True)
+    advantage_id = fields.Many2one(related='employee_id.name',string='Avantage',readonly=True,store=True)
     amount = fields.Float(related='employee_id.amount',string=u'Montant attribué',digits=(8, 2),readonly=True)
     advanced_amount = fields.Float(related='employee_id.advanced_amount',string=u'Montant avancé',digits=(8, 2))
     remaining_amount = fields.Float(related='employee_id.remaining_amount',string='Montant restant',digits=(8, 2))
@@ -39,14 +39,15 @@ class HrEmployeeAdvantageRequest(models.Model):
     period = fields.Char(string=u'Période')
     start_counter = fields.Float(string=u'Début du mois',digits=(8, 2))
     end_counter = fields.Float(string=u'Fin du mois',digits=(8, 2))
-    traveled_distance = fields.Float(string=u'Kilométrage parcouru',digits=(8,2))
+    traveled_distance = fields.Float(compute='check_distance',string=u'Kilométrage parcouru',digits=(8,2))
     km_rate = fields.Float(string=u'Taux par km',digits=(8,2))
     car_request_amount = fields.Float(string=u'Montant à rembourser',digits=(8,2))
     car_count = fields.Float(string=u'Compte voiture',digits=(8, 2))
     personal_count = fields.Float(string=u'Compte personnel',digits=(8, 2))
     other_count = fields.Float(string=u'Autres',digits=(8, 2))
     check_out = fields.Float(string=u'Caisse',digits=(8, 2))
-    total_count = fields.Float(string=u'Total',digits=(8, 2))
+    total_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_amount',readonly=True)
+    remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
 
 
     @api.constrains('request_amount')
@@ -105,8 +106,6 @@ class HrEmployeeAdvantageRequest(models.Model):
                 emp.current_user = False
                 raise exceptions.ValidationError(u"Vous n\'êtes pas autorisé à consulter les avantages d\' une tierce personne")
            
-
-
     @api.multi
     @api.onchange('employee_id')
     def is_current_user_test(self):
@@ -138,6 +137,28 @@ class HrEmployeeAdvantageRequest(models.Model):
     def awarded_amount(self):
         for emp_request in self:
             emp_request.employee_awarded_amount = emp_request.drh_awarded_amount
+
+    @api.onchange('start_counter','end_counter')
+    def check_distance(self):
+        for emp_request in self:
+            emp_request.traveled_distance=emp_request.end_counter - emp_request.start_counter
+
+    @api.onchange('start_counter','end_counter','km_rate')
+    def check_car_request_amount(self):
+        for emp_request in self:
+            emp_request.car_request_amount=emp_request.traveled_distance * emp_request.km_rate
+
+    @api.onchange('car_count','personal_count','other_count','check_out')
+    def check_total_amount(self):
+        for emp_request in self:
+            emp_request.total_count= emp_request.car_count+emp_request.personal_count+emp_request.other_count+emp_request.check_out
+
+    @api.onchange('total_count','car_request_amount')
+    def check_remaining_imputation(self):
+        for emp_request in self:
+            emp_request.remaining_imputation=emp_request.car_request_amount - emp_request.total_count
+
+
 
 
 

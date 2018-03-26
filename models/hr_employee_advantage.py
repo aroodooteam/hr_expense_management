@@ -10,14 +10,14 @@ class HrEmployeeAdvantage(models.Model):
     _name = 'hr.employee.advantage'
     _description = 'Gestion des avantages'
 
-    
+
     # @api.onchange('name')
     #def get_user_id(self):
     #    uid=self.name.user_id.id
     #    for emp in self:
     #        emp.user_id=uid
 
-    
+
     #period_id = fields.Many2one('account.period',string=u'Période')
     annee = fields.Char(string=u'Année',required=True)
     name = fields.Many2one('hr.employee', string=u'Employé',required=True)
@@ -33,12 +33,13 @@ class HrEmployeeAdvantage(models.Model):
     employee_name_id=fields.Char(compute='get_name_id',string='Name id')
     user_id = fields.Many2one('res.users',string='User', related='name.user_id',store=True)
     current_user_id= fields.Boolean(string='Current user', compute='is_current_user')
-    #monthly_amount = fields.Float(string='Montant mensuel', digits=(8,2))
+    #active_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
+    employee_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
 
     #_sql_constraints = [('name_uniq', 'unique(name)', _('The name must be unique !'))]
     _sql_constraints = [('name_annee_uniq', 'unique(annee,name)', _(u'Vous avez déja saisi les avantages de cet employé !'))]
-    
-    
+
+
 
     @api.multi
     def is_current_user(self):
@@ -51,8 +52,8 @@ class HrEmployeeAdvantage(models.Model):
                 manager = True
             else:
                 manager=False
-        
-            if (emp.user_id == uid) or (manager == True):
+
+            if (emp.user_id == uid) or (manager is True):
                 emp.current_user_id = True
             else:
                 emp.current_user_id = False
@@ -82,8 +83,3 @@ class HrEmployeeAdvantage(models.Model):
         nid=self.name.id
         for emp in self:
             emp.employee_name_id=nid
-
-    
-
-            
-

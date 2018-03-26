@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="hr_user_can_see_its_own_advantage" model="ir.rule">
+        	<field name="name">hr user can see its own advantage</field>
+        	<field name="model_id" ref="model_hr_employee_advantage"/>
+        	<field name="domain_force">[('user_id','=',user.id)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="False"/>
+        	<field name="perm_write" eval="False"/>
+        	<field name="perm_unlink" eval="False"/>
+        	<field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    	</record>
+    	<record id="hr_manager_can_see_all_advantage" model="ir.rule">
+        	<field name="name">manager can see all advantage</field>
+        	<field name="model_id" ref="model_hr_employee_advantage"/>
+        	<field name="domain_force">[(1,'=',1)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="True"/>
+        	<field name="perm_write" eval="True"/>
+        	<field name="perm_unlink" eval="True"/>
+        	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
+    	</record>
+    	<record id="hr_user_can_see_its_own_advantage_line" model="ir.rule">
+        	<field name="name">hr user can see its own advantage line</field>
+        	<field name="model_id" ref="model_hr_employee_advantage_line"/>
+        	<field name="domain_force">[('employee_user_id','=',user.id)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="False"/>
+        	<field name="perm_write" eval="False"/>
+        	<field name="perm_unlink" eval="False"/>
+        	<field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    	</record>
+    	<record id="hr_manager_can_see_all_advantage_line" model="ir.rule">
+        	<field name="name">manager can see all advantage_line</field>
+        	<field name="model_id" ref="model_hr_employee_advantage_line"/>
+        	<field name="domain_force">[(1,'=',1)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="True"/>
+        	<field name="perm_write" eval="True"/>
+        	<field name="perm_unlink" eval="True"/>
+        	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
+    	</record>
+    	<record id="user_can_see_its_own_request" model="ir.rule">
+        	<field name="name">hr user can see its own request</field>
+        	<field name="model_id" ref="model_hr_employee_advantage_request"/>
+        	<field name="domain_force">[('create_uid','=',user.id)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="True"/>
+        	<field name="perm_write" eval="True"/>
+        	<field name="perm_unlink" eval="True"/>
+        	<field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    	</record>
+    	<record id="hr_manager_can_see_all_request" model="ir.rule">
+        	<field name="name">manager can see all request</field>
+        	<field name="model_id" ref="model_hr_employee_advantage_request"/>
+        	<field name="domain_force">[(1,'=',1)]</field>
+        	<field name="perm_read" eval="True"/>
+        	<field name="perm_create" eval="True"/>
+        	<field name="perm_write" eval="True"/>
+        	<field name="perm_unlink" eval="True"/>
+        	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
+    	</record>
+	</data>
+</openerp>

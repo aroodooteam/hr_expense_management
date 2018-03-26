@@ -32,7 +32,7 @@
                         </h1>
                         <group col="2" colspan="2">
                             <separator string="Général" colspan="2"/>
-                	        <field name="employee_id"/>
+                	        <field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/>
                             <field name="advantage_id"/>
                             <field name="user_request_id"/>
                             <field name="current_user"/>
@@ -62,9 +62,9 @@
                                         </group>
                                 </group>
                             </page>
-                            <page string="Formulaire d'imputation">
+                            <page string="Formulaire d'imputation" attrs ="{'invisible':[('advantage_id','!=',4)]}">
                                     <separator string="Détails de la demande" colspan="2"/>
-                                        <group col="4" colspan="4">
+                                        <group col="6" colspan="4">
                                             <field name="car_number"/>
                                             <field name="period"/>
                                         </group>
@@ -76,13 +76,18 @@
                                             <field name="km_rate"/>
                                             <field name="car_request_amount"/>
                                         </group>
-                                    <separator string="Imputation" colspan="2"/>
-                                        <group col="2" colspan="2">
-                                            <field name="car_count"/>
-                                            <field name="personal_count"/>
-                                            <field name="other_count"/>
-                                            <field name="check_out"/>
-                                            <field name="total_count"/>
+                                    <separator string="Imputation" colspan="6"/>
+                                        <group col="6" colspan="6">
+                                            <group col="2" colspan="2">
+                                                <field name="car_count"/>
+                                                <field name="personal_count"/>
+                                                <field name="other_count"/>
+                                                <field name="check_out"/>
+                                                <field name="total_count"/>
+                                            </group>
+                                            <group col="2" colspan="2">
+                                                <field name="remaining_imputation"/>
+                                            </group>
                                         </group>
                             </page>
                             <page string="Réservée à l'administration">
