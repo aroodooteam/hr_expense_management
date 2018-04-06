@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <tree string="Avantages">
                     <field name="annee"/>
+                    <field name="matricule"/>
                     <field name="employee_id"/>
                     <field name="name"/>
                     <field name="amount"/>
@@ -86,7 +87,8 @@
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Avantage">
-                    <field name="annee" />
+                    <field name="annee"/>
+                    <field name="matricule"/>
                     <field name="employee_id"/>
                     <field name="name"/>
                     <field name="amount"/>

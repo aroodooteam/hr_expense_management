@@ -12,6 +12,7 @@ class HrEmployeeAdvantageLine(models.Model):
     employee_id = fields.Many2one('hr.employee.advantage', string=u'Employé')
     annee = fields.Char(related='employee_id.annee',string=u'Année',readonly=True, store=True)
     name = fields.Many2one('hr.employee.advantage.type',string='Avantage')
+    matricule=fields.Char(related='employee_id.name.matricule', string='Matricule', readonly=True)
     amount = fields.Float(string=u'Montant attribué',digits=(8, 2))
     advanced_amount = fields.Float(string=u'Montant avancé',digits=(8, 2),compute='get_advanced_amount')
     remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount')
