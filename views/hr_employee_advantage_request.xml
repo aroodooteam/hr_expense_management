@@ -32,7 +32,8 @@
                         </h1>
                         <group col="2" colspan="2">
                             <separator string="Général" colspan="2"/>
-                	        <field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/>
+                	        <!--field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/-->
+                            <field name="employee_id"/>
                             <field name="advantage_id"/>
                             <field name="user_request_id"/>
                             <field name="current_user"/>
@@ -93,6 +94,7 @@
                             <page string="Réservée à l'administration">
                                 <group col ="2" colspan="2" groups="base.group_hr_manager">
                                     <separator string="Observation de l'administration" colspan="2"/>
+                                        <field name="request_amount" readonly="1"/>
                                         <field name="drh_awarded_amount"/>
                                         <field name="drh_observation"/>
                                 </group>

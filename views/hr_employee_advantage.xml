@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <tree string="Avantages">
                     <field name="annee" />
+                    <field name="matricule"/>
                     <field name="name"/>
                     <field name="job_id"/>
                     <field name="department_id"/>
@@ -78,6 +79,7 @@
             <field name="arch" type="xml">
                 <search string="Advantage">
                     <field name="annee"/>
+                    <field name="matricule"/>
                     <field name="name"/>
                     <!--field name="branche_id"/>
                     <field name="module_id"/-->
