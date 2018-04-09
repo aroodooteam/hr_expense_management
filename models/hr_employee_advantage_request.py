@@ -23,6 +23,7 @@ class HrEmployeeAdvantageRequest(models.Model):
     observation = fields.Text(string='Motif',required=True)
     drh_observation = fields.Text(string='Observations')
     employee_awarded_amount = fields.Float(string=u'Montant accordé',readonly=True,default=0.0,digits=(8, 2),compute='awarded_amount')
+    drh_request_amount = fields.Float(string=u'Montant demandé',readonly=True,default=0.0,digits=(8, 2),compute='validation_request_amount')
     state = fields.Selection([
         ('draft', 'Brouillon'),
         ('cancel', 'Annulé'),
@@ -39,13 +40,16 @@ class HrEmployeeAdvantageRequest(models.Model):
     period = fields.Char(string=u'Période')
     start_counter = fields.Float(string=u'Début du mois',digits=(8, 2))
     end_counter = fields.Float(string=u'Fin du mois',digits=(8, 2))
-    traveled_distance = fields.Float(compute='check_distance',string=u'Kilométrage parcouru',digits=(8,2))
+    traveled_distance = fields.Float(string=u'Kilométrage parcouru',digits=(8,2))
     km_rate = fields.Float(string=u'Taux par km',digits=(8,2))
     car_request_amount = fields.Float(string=u'Montant à rembourser',digits=(8,2))
-    car_count = fields.Float(string=u'Compte voiture',digits=(8, 2))
+    car_count = fields.Float(string=u'Compte prêt voiture',digits=(8, 2))
     personal_count = fields.Float(string=u'Compte personnel',digits=(8, 2))
     other_count = fields.Float(string=u'Autres',digits=(8, 2))
     check_out = fields.Float(string=u'Caisse',digits=(8, 2))
+    ppe_count = fields.Float(string=u'Compte PPE',digits=(8, 2))
+    ph_count = fields.Float(string=u'Compte PH',digits=(8, 2))
+    cheque_count = fields.Float(string=u'Chèque',digits=(8, 2))
     total_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_amount',readonly=True)
     remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
 
@@ -138,20 +142,25 @@ class HrEmployeeAdvantageRequest(models.Model):
         for emp_request in self:
             emp_request.employee_awarded_amount = emp_request.drh_awarded_amount
 
-    @api.onchange('start_counter','end_counter')
-    def check_distance(self):
+    @api.onchange('request_amount')
+    def validation_request_amount(self):
         for emp_request in self:
-            emp_request.traveled_distance=emp_request.end_counter - emp_request.start_counter
+            emp_request.drh_request_amount = emp_request.request_amount
+
+    #@api.onchange('start_counter','end_counter')
+    #def check_distance(self):
+        #for emp_request in self:
+            #emp_request.traveled_distance=emp_request.end_counter - emp_request.start_counter
 
     @api.onchange('start_counter','end_counter','km_rate')
     def check_car_request_amount(self):
         for emp_request in self:
             emp_request.car_request_amount=emp_request.traveled_distance * emp_request.km_rate
 
-    @api.onchange('car_count','personal_count','other_count','check_out')
+    @api.onchange('car_count','personal_count','other_count','check_out','ppe_count','ph_count','cheque_count')
     def check_total_amount(self):
         for emp_request in self:
-            emp_request.total_count= emp_request.car_count+emp_request.personal_count+emp_request.other_count+emp_request.check_out
+            emp_request.total_count= emp_request.car_count+emp_request.personal_count+emp_request.check_out+emp_request.ppe_count+emp_request.ph_count+emp_request.cheque_count
 
     @api.onchange('total_count','car_request_amount')
     def check_remaining_imputation(self):

@@ -82,7 +82,10 @@
                                             <group col="2" colspan="2">
                                                 <field name="car_count"/>
                                                 <field name="personal_count"/>
-                                                <field name="other_count"/>
+                                                <!--field name="other_count"/-->
+                                                <field name="ppe_count"/>
+                                                <field name="ph_count"/>
+                                                <field name="cheque_count"/>
                                                 <field name="check_out"/>
                                                 <field name="total_count"/>
                                             </group>
@@ -94,7 +97,7 @@
                             <page string="Réservée à l'administration">
                                 <group col ="2" colspan="2" groups="base.group_hr_manager">
                                     <separator string="Observation de l'administration" colspan="2"/>
-                                        <field name="request_amount" readonly="1"/>
+                                        <field name="drh_request_amount"/>
                                         <field name="drh_awarded_amount"/>
                                         <field name="drh_observation"/>
                                 </group>
