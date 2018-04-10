@@ -52,7 +52,7 @@ class HrEmployeeAdvantageLine(models.Model):
         #montant.remaining_amount="50"
 
     
-    @api.depends('amount')
+    @api.onchange('amount')
     @api.depends('employee_advantage_request_ids')
     def get_remaining_amount(self):
         for montant in self:
