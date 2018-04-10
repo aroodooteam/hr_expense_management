@@ -54,11 +54,11 @@ class HrEmployeeAdvantageRequest(models.Model):
     remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
 
 
-    @api.constrains('request_amount')
-    def _check_request_amount(self):
-        for record in self:
-            if record.request_amount > record.remaining_amount:
-                raise exceptions.ValidationError(u"Votre demande de remboursement est supérieure au montant restant autorisé, merci de vérifier")
+    #@api.constrains('request_amount')
+    #def _check_request_amount(self):
+        #for record in self:
+            #if record.request_amount > record.remaining_amount:
+                #raise exceptions.ValidationError(u"Votre demande de remboursement est supérieure au montant restant autorisé, merci de vérifier")
 
     @api.multi
     def action_confirm(self):

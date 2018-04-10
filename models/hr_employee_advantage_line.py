@@ -15,7 +15,7 @@ class HrEmployeeAdvantageLine(models.Model):
     matricule=fields.Char(related='employee_id.name.matricule', string='Matricule', readonly=True)
     amount = fields.Float(string=u'Montant attribué',digits=(8, 2))
     advanced_amount = fields.Float(string=u'Montant avancé',digits=(8, 2),compute='get_advanced_amount')
-    remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount')
+    remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount',store=True)
     monthly_amount = fields.Float(string='Montant mensuel',readonly=False,default=0.0, store=True,digits=(8, 2), compute='_onchange_amount')
     state = fields.Selection((('add', 'Attribuer'), ('remove', 'Consommer'), ('cancel', 'Annuler')), 'Action')
     ref = fields.Char(string=u'Référence')
@@ -51,8 +51,8 @@ class HrEmployeeAdvantageLine(models.Model):
         #montant.remaining_amount=montant.amount-montant.advanced_amount
         #montant.remaining_amount="50"
 
-    #@api.onchange('amount','employee_advantage_request_ids.advanced_amount')
-    @api.onchange('amount')
+    
+    @api.depends('amount')
     @api.depends('employee_advantage_request_ids')
     def get_remaining_amount(self):
         for montant in self:
