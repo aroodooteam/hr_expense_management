@@ -66,12 +66,12 @@
                                             <field name="request_amount"/>
                                             <field name="payment_method"/>
                                         </group>
-                                        <group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                        <!--group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
                                             <field name="domesticite_request_amount"/>
                                             <field name="jirama_request_amount"/>
                                             <field name="phone_request_amount"/>
                                             <field name="gaz_request_amount"/>
-                                        </group>
+                                        </group-->
                                         <group col="2" colspan="2">
                                             <field name="observation"/>
                                             <field name="employee_awarded_amount"/>
