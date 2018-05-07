@@ -22,7 +22,7 @@
         	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
     	</record>
     	<record id="hr_user_can_see_its_own_advantage_line" model="ir.rule">
-        	<field name="name">hr user can see its own advantage line</field>
+        	<field name="name">hr user can only see its own advantage line</field>
         	<field name="model_id" ref="model_hr_employee_advantage_line"/>
         	<field name="domain_force">[('employee_user_id','=',user.id)]</field>
         	<field name="perm_read" eval="True"/>
@@ -44,7 +44,8 @@
     	<record id="user_can_see_its_own_request" model="ir.rule">
         	<field name="name">hr user can see its own request</field>
         	<field name="model_id" ref="model_hr_employee_advantage_request"/>
-        	<field name="domain_force">[('create_uid','=',user.id)]</field>
+        	<field name="domain_force">['|',('create_uid','=',user.id),('user_request_id','=',user.id)]</field>
+            <!--field name="domain_force">[('employee_request_id','=',user.id)]</field-->
         	<field name="perm_read" eval="True"/>
         	<field name="perm_create" eval="True"/>
         	<field name="perm_write" eval="True"/>
@@ -61,5 +62,15 @@
         	<field name="perm_unlink" eval="True"/>
         	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
     	</record>
+        <!--record id="only_manager_can_modify" model="ir.rule">
+            <field name="name">Only manager can modify confirmed request</field>
+            <field name="model_id" ref="model_hr_employee_advantage_request"/>
+            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('state','=','confirmed')]</field>
+        </record-->
 	</data>
 </openerp>

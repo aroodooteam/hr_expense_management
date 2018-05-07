@@ -15,7 +15,9 @@ class HrEmployeeAdvantageLine(models.Model):
     matricule=fields.Char(related='employee_id.name.matricule', string='Matricule', readonly=True)
     amount = fields.Float(string=u'Montant attribué',digits=(8, 2))
     advanced_amount = fields.Float(string=u'Montant avancé',digits=(8, 2),compute='get_advanced_amount')
+    #advanced_amount_corrected = fields.Float(string=u'Montant avancé corrigé',digits=(8, 2),compute='get_advanced_amount')
     remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount',store=True)
+    remaining_balance = fields.Float(string=u'Montant restant',digits=(8, 2),compute='get_remaining_balance',store=True)
     monthly_amount = fields.Float(string='Montant mensuel',readonly=False,default=0.0, store=True,digits=(8, 2), compute='_onchange_amount')
     state = fields.Selection((('add', 'Attribuer'), ('remove', 'Consommer'), ('cancel', 'Annuler')), 'Action')
     ref = fields.Char(string=u'Référence')
@@ -23,6 +25,10 @@ class HrEmployeeAdvantageLine(models.Model):
     employee_user_id = fields.Many2one(related='employee_id.user_id', string='User id',store=True)
     current_user= fields.Boolean(string='Current user', compute='is_current_user')
     officer_id = fields.Many2one(related='employee_id.name',string='Employee ID',store=True)
+    user_request_id = fields.Integer(string='User request id', compute='get_user_request_id',store=True)
+    #emp_id = fields.Many2one('hr.employee',string='Nom Emp',default=get_emp_id)
+    #test_employee_id = fields.Integer(string='Employee ID')
+
 
     @api.multi
     def name_get(self):
@@ -38,6 +44,7 @@ class HrEmployeeAdvantageLine(models.Model):
         return res
 
     @api.multi
+    @api.depends('employee_advantage_request_ids.drh_awarded_amount')
     def get_advanced_amount(self):
         for montant in self:
             emp_request=len(montant.employee_advantage_request_ids)
@@ -45,20 +52,32 @@ class HrEmployeeAdvantageLine(models.Model):
             i=0
             while i < emp_request:
                 for request in montant.employee_advantage_request_ids:
-                    count =count +request.request_amount
+                    #count =count +request.request_amount
+                    count+= request.drh_awarded_amount
                     i=i+1
                     montant.advanced_amount=count
-        #montant.remaining_amount=montant.amount-montant.advanced_amount
-        #montant.remaining_amount="50"
+                    #montant.advanced_amount_corrected=montant.advanced_amount
+        
 
-    
-    @api.onchange('amount')
-    @api.depends('employee_advantage_request_ids')
+    @api.depends('amount','advanced_amount')
+    @api.multi
     def get_remaining_amount(self):
         for montant in self:
-            for request in montant.employee_advantage_request_ids:
+            if montant.advanced_amount != 0:
                 montant.remaining_amount=montant.amount-montant.advanced_amount
+            else:
+                montant.remaining_amount=montant.amount
 
+    @api.depends('amount','advanced_amount')
+    @api.multi
+    def get_remaining_balance(self):
+        for montant in self:
+            if montant.advanced_amount != 0:
+                montant.remaining_balance=montant.amount-montant.advanced_amount
+            else:
+                montant.remaining_balance=montant.amount
+
+            
     @api.multi
     def is_current_user(self):
         for emp in self:
@@ -81,3 +100,10 @@ class HrEmployeeAdvantageLine(models.Model):
     def _onchange_amount(self):
         for montant in self:
             montant.monthly_amount = montant.amount/12
+    
+
+    #@api.multi
+    @api.depends('officer_id')
+    def get_user_request_id (self):
+        for emp_request in self:
+            emp_request.user_request_id = emp_request.officer_id

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <report
+            id="hr_expense_advantage_request"
+            model="hr.employee.advantage.request"
+            string="Formulaire de remboursement"
+            report_type="qweb-pdf"
+            name="hr_expense_management.hr_expense_report_advantage_request"
+            file="hr_expense_management.hr_expense_report_advantage_request"
+        />
+        <template id="hr_expense_report_advantage_request">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                        <div class ="page">
+                            <style type="text/css">
+                                [class*="col-"] {
+                                font-size:11;
+                                }
+                                h2 {text-align: center;font-size: 26; color:red;font-weight: bold;}
+                                h3 {font-size: 20;  font-weight: bold; color:blue;}
+                                h4 {font-size: 20;  font-weight: bold; color:blue;}
+                                h5 {text-align: center;font-size: 20; font-weight: bold;}
+                            </style>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h2>FORMULAIRE DE REMBOURSEMENT</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h3>Général:</h3>
+                                        <p><b>Employé:</b> <span t-field="doc.employee_id"/></p>
+                                        <p><b>Type d'avantage:</b> <span t-field="doc.advantage_id"/></p>
+                                        <p><b>Montant attribué:</b> <span t-field="doc.amount"/></p>
+                                        <p><b>Montant restant:</b> <span t-field="doc.remaining_amount"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h3>Détail de la demande:</h3>
+                                        <p><b>Envoyé le:</b> <span t-field="doc.date"/></p>
+                                        <p><b>Numéro CR:</b> <span t-field="doc.cr_number"/></p>
+                                        <p><b>Paiement souhaité:</b> <span t-field="doc.payment_method"/></p>
+                                        <p><b>Montant demandé:</b> <span t-field="doc.request_amount"/></p>
+                                        <p><b>Motif:</b> <span t-field="doc.observation"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class ="row">
+                                    <div class = "col-xs-12 text-left">
+                                        <h3>Visa de l'administration:</h3>
+                                        <p><b>Montant accordé:</b> <span t-field="doc.drh_awarded_amount"/></p>
+                                        <p><b>Observations:</b> <span t-field="doc.drh_observation"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

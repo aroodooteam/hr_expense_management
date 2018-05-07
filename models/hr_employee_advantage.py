@@ -6,6 +6,16 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+#class HrEmployeeCredit(models.Model):
+    #_name = 'hr.employee.credit'
+    #_description = 'Test sur la gestion des credits'
+
+    #annee = fields.Char(string=u'Année')
+    #name = fields.Many2one('hr.employee',string=u'Employé')
+    #matricule = fields.Char(string='Matricule')
+    #job_id = fields.Many2one('hr.job',string='Job')
+
+
 class HrEmployeeAdvantage(models.Model):
     _name = 'hr.employee.advantage'
     _description = 'Gestion des avantages'
@@ -35,7 +45,6 @@ class HrEmployeeAdvantage(models.Model):
     current_user_id= fields.Boolean(string='Current user', compute='is_current_user')
     #active_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
     employee_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
-
     #_sql_constraints = [('name_uniq', 'unique(name)', _('The name must be unique !'))]
     _sql_constraints = [('name_annee_uniq', 'unique(annee,name)', _(u'Vous avez déja saisi les avantages de cet employé !'))]
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	 <!-- Vue form hr_employee_advantage-->
+        <record id="hr_employee_credit_form" model="ir.ui.view">
+            <field name="name">hr.employee.credit.form</field>
+            <field name="model">hr.employee.credit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avantages">
+                	<group col="2" colspan="2">
+                        <separator string="Général" colspan="2"/>
+                        <field name="annee"/>
+                        <field name="name"/>
+                        <field name="matricule"/>
+                        <field name="job_id"/>
+                    </group>
+                </form>
+        	</field>
+        </record>
+  
+		<!-- Action du menu Avantage-->
+        <record model="ir.actions.act_window" id="action_gestion_credit">
+            <field name="name">Crédit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee.credit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="domain">[('current_user_id','=',True)]</field-->
+        </record>
+        
+
+        <!-- Menu Gestion des avantages-->
+        <menuitem action="action_gestion_credit" 
+                  id="menu_hr_employee_credit" 
+                  parent="menu_hr_employee_advantage_root"
+                  groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
+    </data>
+</openerp>

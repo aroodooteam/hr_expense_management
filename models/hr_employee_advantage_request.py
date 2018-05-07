@@ -9,7 +9,12 @@ class HrEmployeeAdvantageRequest(models.Model):
     _name = 'hr.employee.advantage.request'
     _description = u'Gérer les demandes d avantages'
 
-    user_request_id = fields.Many2one('res.users', string='User ID', default=lambda self: self.env.user)
+    def get_emp_id(self):
+        emp_obj=self.env['hr.employee']
+        _logger.info("\n === Hary = ")
+        return emp_obj.search([('user_id','=',self.env.user.id)], limit=1)
+
+    
     employee_id = fields.Many2one('hr.employee.advantage.line', string=u'Employé')
     #advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True)
     advantage_id = fields.Many2one(related='employee_id.name',string='Avantage',readonly=True,store=True)
@@ -29,6 +34,7 @@ class HrEmployeeAdvantageRequest(models.Model):
         ('cancel', 'Annulé'),
         ('confirmed', 'Confirmé'),
         ('refuse', 'Refusé'),
+        ('validate', 'Validé'),
         ('validate1', 'divRPAS'),
         ('validate2', 'DRH'),
         ('validate3','Comptabilité')], default='draft')
@@ -52,6 +58,15 @@ class HrEmployeeAdvantageRequest(models.Model):
     cheque_count = fields.Float(string=u'Chèque',digits=(8, 2))
     total_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_amount',readonly=True)
     remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
+    #employee_request_id = fields.Many2one(related='employee_id.employee_user_id',string='User request id',store=True)
+    emp_id = fields.Many2one('hr.employee',string='Nom Emp',default=get_emp_id)
+    user_request_id = fields.Many2one('res.users', string='User ID', related='emp_id.user_id',store=True)
+    
+
+
+    @api.onchange('employee_id')
+    def _onchange_employee_id(self):
+        self.emp_id=self.employee_id.officer_id
 
 
     #@api.constrains('request_amount')
@@ -67,7 +82,13 @@ class HrEmployeeAdvantageRequest(models.Model):
     @api.multi
     def reset_to_draft(self):
         self.state = 'draft'
- 
+
+
+    @api.multi
+    def first_validate(self):
+        self.state = 'validate'
+
+
     @api.multi
     def validate_dRPAS(self):
         self.state = 'validate1'
@@ -76,13 +97,13 @@ class HrEmployeeAdvantageRequest(models.Model):
     def validate_DRH(self):
         self.state = 'validate2'
 
-    @api.multi 
+    @api.multi
     def validate_CPTE(self):
         self.state = 'validate3'
 
     @api.multi
     def check_employee_request(self):
-                
+
         if self.env.user.id == self.employee_id.employee_user_id :
             raise Warning("Vrai")
         else:
@@ -99,7 +120,7 @@ class HrEmployeeAdvantageRequest(models.Model):
                 manager = True
             else:
                 manager=False
-        
+
             if (emp.user_request_id == uid) or (manager == True):
                 #if (emp.create_uid == uid) or (manager == True):
                 emp.current_user = True
@@ -109,7 +130,7 @@ class HrEmployeeAdvantageRequest(models.Model):
             else:
                 emp.current_user = False
                 raise exceptions.ValidationError(u"Vous n\'êtes pas autorisé à consulter les avantages d\' une tierce personne")
-           
+
     @api.multi
     @api.onchange('employee_id')
     def is_current_user_test(self):
@@ -128,15 +149,15 @@ class HrEmployeeAdvantageRequest(models.Model):
                 #raise exceptions.ValidationError(u"Vous n\'êtes pas autorisé à consulter les avantages d\' une tierce personne")
             else:
                 emp_request.current_user = False
-                raise exceptions.ValidationError(u"Vous n\'êtes pas autorisé à consulter les avantages d\' une tierce personne")
+                #raise exceptions.ValidationError(u"Vous n\'êtes pas autorisé à consulter les avantages d\' une tierce personne")
 
             #if emp_request.employee_id.employee_user_id == emp_request.user_request_id :
             if not emp_request.employee_id.employee_user_id or emp_request.employee_id.employee_user_id == emp_request.user_request_id:
                emp_request.current_user = True
             elif emp_request.employee_id.employee_user_id != emp_request.user_request_id and manager == False :
-               raise exceptions.ValidationError(u"Vous ne pouvez pas saisir les remboursements d\'une tierce personne")
+               #raise exceptions.ValidationError(u"Vous ne pouvez pas saisir les remboursements d\'une tierce personne")
                emp_request.current_user = False
-               
+
     @api.onchange('drh_awarded_amount')
     def awarded_amount(self):
         for emp_request in self:
@@ -166,9 +187,3 @@ class HrEmployeeAdvantageRequest(models.Model):
     def check_remaining_imputation(self):
         for emp_request in self:
             emp_request.remaining_imputation=emp_request.car_request_amount - emp_request.total_count
-
-
-
-
-
-

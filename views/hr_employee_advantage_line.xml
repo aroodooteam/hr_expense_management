@@ -43,7 +43,9 @@
                             <group col="4" colspan="4">
                                 <field name="amount"/>
                                 <field name="advanced_amount"/>
+                                <!--field name="advanced_amount_corrected"/-->
                                 <field name="remaining_amount"/>
+                                <field name="remaining_balance"/>
                                 <field name="state"/>
                                 <field name="monthly_amount"/>
                             </group>
@@ -56,6 +58,7 @@
                                         <field name="cr_number"/>
                                         <!--field name="advantage_id"/-->
                                         <field name="request_amount"/>
+                                        <field name="drh_awarded_amount"/>
                                         <field name="observation"/>
                                     </tree>
                                     <form string="Avantages">
@@ -64,7 +67,6 @@
                                             <field name="advantage_id"/>
                                             <field name="amount"/>
                                             <field name="advanced_amount"/>
-                                            <field name="remaining_amount"/>
                                             <field name="date"/>
                                             <field name="cr_number"/>
                                             <field name="request_amount"/>
