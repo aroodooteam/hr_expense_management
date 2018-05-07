@@ -39,7 +39,7 @@
                         <group col="2" colspan="2">
                             <separator string="Général" colspan="2"/>
                 	        <!--field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/-->
-                            <!--field name="emp_id"/-->
+                            <field name="emp_id"/>
                             <field name="employee_id"/>
                             <field name="advantage_id"/>
                             <field name="user_request_id"/>
@@ -66,9 +66,15 @@
                                             <field name="request_amount"/>
                                             <field name="payment_method"/>
                                         </group>
+                                        <group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                            <field name="domesticite_request_amount"/>
+                                            <field name="jirama_request_amount"/>
+                                            <field name="phone_request_amount"/>
+                                            <field name="gaz_request_amount"/>
+                                        </group>
                                         <group col="2" colspan="2">
-                                            <field name="employee_awarded_amount"/>
                                             <field name="observation"/>
+                                            <field name="employee_awarded_amount"/>
                                         </group>
                                 </group>
                             </page>
