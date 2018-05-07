@@ -37,6 +37,7 @@
                             <field name="employee_id"/>
                             <field name="name"/>
                             <field name="employee_user_id"/>
+                            <field name="officer_id"/>
                             <field name="current_user"/>
                         </group>
                             <separator string="Situation du compte" colspan="2"/>
