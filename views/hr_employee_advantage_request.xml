@@ -39,7 +39,7 @@
                         <group col="2" colspan="2">
                             <separator string="Général" colspan="2"/>
                 	        <!--field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/-->
-                            <field name="emp_id"/>
+                            <!--field name="emp_id"/-->
                             <field name="employee_id"/>
                             <field name="advantage_id"/>
                             <field name="user_request_id"/>
@@ -157,6 +157,8 @@
                         <group string="Group By…">
                             <filter string="Etat" name="group_state" icon="terp-personal" domain="[]"
                             context="{'group_by':'state'}"/>
+                            <filter string="Employé" name="group_employee" icon="terp-personal" domain="[]"
+                            context="{'group_by':'employee_id'}"/>
                         </group>
                 </search>
             </field>

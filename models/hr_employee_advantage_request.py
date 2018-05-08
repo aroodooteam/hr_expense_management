@@ -61,7 +61,11 @@ class HrEmployeeAdvantageRequest(models.Model):
     #employee_request_id = fields.Many2one(related='employee_id.employee_user_id',string='User request id',store=True)
     emp_id = fields.Many2one('hr.employee',string='Nom Emp',default=get_emp_id)
     user_request_id = fields.Many2one('res.users', string='User ID', related='emp_id.user_id',store=True)
-    
+    domesticite_request_amount = fields.Float(string=u'Domesticité')
+    jirama_request_amount = fields.Float(string=u'Jirama')
+    phone_request_amount = fields.Float(string=u'Téléphone')
+    gaz_request_amount = fields.Float(string=u'Gaz')
+
 
 
     @api.onchange('employee_id')
