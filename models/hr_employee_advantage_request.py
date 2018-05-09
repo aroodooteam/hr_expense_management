@@ -56,6 +56,7 @@ class HrEmployeeAdvantageRequest(models.Model):
     ppe_count = fields.Float(string=u'Compte PPE',digits=(8, 2))
     ph_count = fields.Float(string=u'Compte PH',digits=(8, 2))
     cheque_count = fields.Float(string=u'Chèque',digits=(8, 2))
+    bank_transfer = fields.Float(string=u'Virement bancaire',digits=(8, 2))
     total_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_amount',readonly=True)
     remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
     #employee_request_id = fields.Many2one(related='employee_id.employee_user_id',string='User request id',store=True)
@@ -182,10 +183,10 @@ class HrEmployeeAdvantageRequest(models.Model):
         for emp_request in self:
             emp_request.car_request_amount=emp_request.traveled_distance * emp_request.km_rate
 
-    @api.onchange('car_count','personal_count','other_count','check_out','ppe_count','ph_count','cheque_count')
+    @api.onchange('car_count','personal_count','other_count','check_out','ppe_count','ph_count','cheque_count','bank_transfer')
     def check_total_amount(self):
         for emp_request in self:
-            emp_request.total_count= emp_request.car_count+emp_request.personal_count+emp_request.check_out+emp_request.ppe_count+emp_request.ph_count+emp_request.cheque_count
+            emp_request.total_count= emp_request.car_count+emp_request.personal_count+emp_request.check_out+emp_request.ppe_count+emp_request.ph_count+emp_request.cheque_count+emp_request.bank_transfer
 
     @api.onchange('total_count','car_request_amount')
     def check_remaining_imputation(self):

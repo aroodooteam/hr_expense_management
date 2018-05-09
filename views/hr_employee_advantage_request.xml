@@ -39,7 +39,7 @@
                         <group col="2" colspan="2">
                             <separator string="Général" colspan="2"/>
                 	        <!--field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/-->
-                            <!--field name="emp_id"/-->
+                            <field name="emp_id"/>
                             <field name="employee_id"/>
                             <field name="advantage_id"/>
                             <field name="user_request_id"/>
@@ -95,6 +95,7 @@
                                     <separator string="Imputation" colspan="6"/>
                                         <group col="6" colspan="6">
                                             <group col="2" colspan="2">
+                                                <field name="bank_transfer"/>
                                                 <field name="car_count"/>
                                                 <field name="personal_count"/>
                                                 <!--field name="other_count"/-->
