@@ -15,6 +15,19 @@ class HrEmployeeAdvantageRequest(models.Model):
         return emp_obj.search([('user_id','=',self.env.user.id)], limit=1)
 
     
+    def get_current_user_id(self):
+        uid = self.env.user.id
+        _logger.info("\n === Solofo = ")
+        _logger.info("\n === user id = %s" % uid)
+        #manager=False
+        for emp in self:
+            if uid == 1:
+                emp.admin_user=True
+            else:
+                emp.admin_user=False
+
+
+    
     employee_id = fields.Many2one('hr.employee.advantage.line', string=u'Employé')
     #advantage_id = fields.Char(related='employee_id.name.name', string='Avantage',readonly=True)
     advantage_id = fields.Many2one(related='employee_id.name',string='Avantage',readonly=True,store=True)
@@ -58,7 +71,9 @@ class HrEmployeeAdvantageRequest(models.Model):
     cheque_count = fields.Float(string=u'Chèque',digits=(8, 2))
     bank_transfer = fields.Float(string=u'Virement bancaire',digits=(8, 2))
     total_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_amount',readonly=True)
+    total_fonction_count = fields.Float(string=u'Total',digits=(8, 2),compute='check_total_fonction_amount',readonly=True)
     remaining_imputation = fields.Float(string='Montant restant',compute='check_remaining_imputation',readonly=True)
+    remaining_fonction_imputation = fields.Float(string='Montant restant',compute='check_remaining_fonction_imputation',readonly=True)
     #employee_request_id = fields.Many2one(related='employee_id.employee_user_id',string='User request id',store=True)
     emp_id = fields.Many2one('hr.employee',string='Nom Emp',default=get_emp_id)
     user_request_id = fields.Many2one('res.users', string='User ID', related='emp_id.user_id',store=True)
@@ -66,7 +81,28 @@ class HrEmployeeAdvantageRequest(models.Model):
     jirama_request_amount = fields.Float(string=u'Jirama')
     phone_request_amount = fields.Float(string=u'Téléphone')
     gaz_request_amount = fields.Float(string=u'Gaz')
+    drh_domesticite_request_amount = fields.Float(string=u'Domesticité demandé',compute='validation_request_amount')
+    drh_jirama_request_amount = fields.Float(string=u'Jirama demandé',compute='validation_request_amount')
+    drh_phone_request_amount = fields.Float(string=u'Téléphone demandé',compute='validation_request_amount')
+    drh_gaz_request_amount = fields.Float(string=u'Gaz demandé',compute='validation_request_amount')
+    drh_domesticite_amount = fields.Float(string=u'Domesticité accordé')
+    drh_jirama_amount = fields.Float(string=u'Jirama accordé')
+    drh_phone_amount = fields.Float(string=u'Téléphone accordé')
+    drh_gaz_amount = fields.Float(string=u'Gaz accordé')
+    #current_user_id = fields.Many2one('res.users',string='Utlisateur courant', default=lambda self: self.env.user)
+    admin_user = fields.Boolean(string='Administrateur', compute='get_current_user_id')
 
+
+    @api.multi
+    def get_current_user_id(self):
+        uid = self.env.user.id
+        _logger.info("\n === Solofo = ")
+        _logger.info("\n === user id = %s" % uid)
+        for emp in self:
+            if uid == 1:
+                emp.admin_user=True
+            else:
+                emp.admin_user=False
 
 
     @api.onchange('employee_id')
@@ -168,11 +204,18 @@ class HrEmployeeAdvantageRequest(models.Model):
         for emp_request in self:
             emp_request.employee_awarded_amount = emp_request.drh_awarded_amount
 
-    @api.onchange('request_amount')
+    @api.onchange('request_amount','jirama_request_amount')
     def validation_request_amount(self):
         for emp_request in self:
             emp_request.drh_request_amount = emp_request.request_amount
-
+            if emp_request.domesticite_request_amount:
+                emp_request.drh_domesticite_request_amount=emp_request.domesticite_request_amount
+            if emp_request.jirama_request_amount:
+                emp_request.drh_jirama_request_amount=emp_request.jirama_request_amount
+            if emp_request.phone_request_amount:
+                emp_request.drh_phone_request_amount=emp_request.phone_request_amount
+            if emp_request.gaz_request_amount:
+                emp_request.drh_gaz_request_amount=emp_request.gaz_request_amount
     #@api.onchange('start_counter','end_counter')
     #def check_distance(self):
         #for emp_request in self:
@@ -192,3 +235,13 @@ class HrEmployeeAdvantageRequest(models.Model):
     def check_remaining_imputation(self):
         for emp_request in self:
             emp_request.remaining_imputation=emp_request.car_request_amount - emp_request.total_count
+
+    @api.onchange('domesticite_request_amount','jirama_request_amount','phone_request_amount','gaz_request_amount')
+    def check_total_fonction_amount(self):
+        for emp_request in self:
+            emp_request.total_fonction_count=emp_request.domesticite_request_amount+emp_request.jirama_request_amount+emp_request.phone_request_amount+emp_request.gaz_request_amount
+
+    @api.onchange('total_fonction_count','request_amount')
+    def check_remaining_fonction_imputation(self):
+        for emp_request in self:
+            emp_request.remaining_fonction_imputation=emp_request.request_amount-emp_request.total_fonction_count

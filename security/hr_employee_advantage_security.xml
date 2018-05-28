@@ -62,13 +62,20 @@
         	<field name="perm_unlink" eval="True"/>
         	<field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
     	</record>
+        <!--record id="manager_cant_see_draft_request" model="ir.rule">
+            <field name="name">hr manager cant see draft request</field>
+            <field name="model_id" ref="model_hr_employee_advantage_request"/>
+            <field name="domain_force">[('state','=','draft')]</field>
+            <field name="perm_read" eval="False"/>
+            <field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
+        </record-->
         <!--record id="only_manager_can_modify" model="ir.rule">
             <field name="name">Only manager can modify confirmed request</field>
             <field name="model_id" ref="model_hr_employee_advantage_request"/>
-            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+            <field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
             <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="False"/>
             <field name="domain_force">[('state','=','confirmed')]</field>
         </record-->

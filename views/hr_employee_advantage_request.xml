@@ -37,13 +37,15 @@
                             <label string="Formulaire de demande de remboursement"/>
                         </h1>
                         <group col="2" colspan="2">
-                            <separator string="Général" colspan="2"/>
+                            <separator string="Demandeur" colspan="2"/>
                 	        <!--field name="employee_id" domain="[('employee_user_id','=',user_request_id)]"/-->
-                            <field name="emp_id"/>
-                            <field name="employee_id"/>
+                            <field name="id" string='Demande n°'/>
+                            <field name="admin_user" attrs="{'invisible':[('admin_user','=',False)]}"/>
+                            <field name="emp_id" attrs="{'invisible':[('admin_user','=',False)]}"/>
+                            <field name="employee_id" attrs="{'readonly':[('state','!=','draft')]}"/>
                             <field name="advantage_id"/>
-                            <field name="user_request_id"/>
-                            <field name="current_user"/>
+                            <field name="user_request_id" attrs="{'invisible':[('admin_user','=',False)]}"/>
+                            <field name="current_user" attrs="{'invisible':[('admin_user','=',False)]}"/>
                         </group>
                         <!--group col="2" colspan="2" attrs="{'invisible':[('current_user','=',False)]}"-->
                         <group col="2" colspan="2">
@@ -55,55 +57,59 @@
                         <notebook colspan="4">
                             <page string="Demande">
                                 <!--group attrs="{'invisible':[('current_user','=',False)]}"-->
-                                <group>
                                     <separator string="Détails de la demande" colspan="2"/>
                                         <group col="6" colspan="6">
-                                            <field name="date"/>
-                                            <field name="attachment"/>
+                                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="attachment" attrs ="{'invisible':[('advantage_id','=',4)]}"/>
                                             <field name="cr_number"/>
-                                        <!--/group-->
-                                        <!--group col="4" colspan="4"-->
-                                            <field name="request_amount"/>
-                                            <field name="payment_method"/>
+                                            <field name="request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="payment_method" attrs ="{'invisible':[('advantage_id','=',4)]}"/>
                                         </group>
-                                        <!--group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
-                                            <field name="domesticite_request_amount"/>
-                                            <field name="jirama_request_amount"/>
-                                            <field name="phone_request_amount"/>
-                                            <field name="gaz_request_amount"/>
-                                        </group-->
+                                        <group col="6" colspan="4">
+                                            <group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                                <field name="domesticite_request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="jirama_request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="phone_request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="gaz_request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            </group>
+                                            <group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                                <field name="remaining_fonction_imputation"/>
+                                            </group>
+                                            <group col="2" colspan="2" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                                <field name="total_fonction_count"/>
+                                            </group>
+                                        </group>
                                         <group col="2" colspan="2">
-                                            <field name="observation"/>
-                                            <field name="employee_awarded_amount"/>
+                                                <field name="observation" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="employee_awarded_amount"/>
                                         </group>
-                                </group>
                             </page>
                             <page string="Formulaire d'imputation" attrs ="{'invisible':[('advantage_id','!=',4)]}">
                                     <separator string="Détails de la demande" colspan="2"/>
-                                        <group col="6" colspan="4">
-                                            <field name="car_number"/>
-                                            <field name="period"/>
+                                        <group col="6" colspan="4" >
+                                            <field name="car_number" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="period" attrs="{'readonly':[('state','!=','draft')]}"/>
                                         </group>
                                     <separator string="Relevé compteur kilométrique" colspan="2"/>
                                         <group col="6" colspan="6">
-                                            <field name="start_counter"/>
-                                            <field name="end_counter"/>
-                                            <field name="traveled_distance"/>
-                                            <field name="km_rate"/>
-                                            <field name="car_request_amount"/>
+                                            <field name="start_counter" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="end_counter" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="traveled_distance" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="km_rate" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                            <field name="car_request_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
                                         </group>
                                     <separator string="Imputation" colspan="6"/>
                                         <group col="6" colspan="6">
                                             <group col="2" colspan="2">
-                                                <field name="bank_transfer"/>
-                                                <field name="car_count"/>
+                                                <field name="bank_transfer" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="car_count" attrs="{'readonly':[('state','!=','draft')]}"/>
                                                 <field name="personal_count"/>
                                                 <!--field name="other_count"/-->
-                                                <field name="ppe_count"/>
-                                                <field name="ph_count"/>
-                                                <field name="cheque_count"/>
-                                                <field name="check_out"/>
-                                                <field name="total_count"/>
+                                                <field name="ppe_count" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="ph_count" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="cheque_count" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="check_out" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                                <field name="total_count" attrs="{'readonly':[('state','!=','draft')]}"/>
                                             </group>
                                             <group col="2" colspan="2">
                                                 <field name="remaining_imputation"/>
@@ -114,7 +120,18 @@
                                 <group col ="2" colspan="2" groups="base.group_hr_manager">
                                     <separator string="Observation de l'administration" colspan="2"/>
                                         <field name="drh_request_amount"/>
-                                        <field name="drh_awarded_amount"/>
+                                        <group col ="4" colspan="4" groups="base.group_hr_manager" attrs ="{'invisible':[('advantage_id','!=',1)]}">
+                                            <separator string="Frais de fonction" colspan="4"/>
+                                                <field name="drh_domesticite_request_amount"/>
+                                                <field name="drh_domesticite_amount"/>
+                                                <field name="drh_jirama_request_amount"/>
+                                                <field name="drh_jirama_amount"/>
+                                                <field name="drh_phone_request_amount"/>
+                                                <field name="drh_phone_amount"/>
+                                                <field name="drh_gaz_request_amount"/>
+                                                <field name="drh_gaz_amount"/>
+                                        </group>
+                                        <field name="drh_awarded_amount" />
                                         <field name="drh_observation"/>
                                 </group>
                             </page>
@@ -153,6 +170,7 @@
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Advantage">
+                     <field name="id" string="Numéro de demande"/>
                      <field name="advantage_id"/>
                      <field name="state"/>
                         <group string="Group By…">

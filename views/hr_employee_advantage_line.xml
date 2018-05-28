@@ -45,7 +45,7 @@
                                 <field name="amount"/>
                                 <field name="advanced_amount"/>
                                 <!--field name="advanced_amount_corrected"/-->
-                                <field name="remaining_amount"/>
+                                <!--field name="remaining_amount"/-->
                                 <field name="remaining_balance"/>
                                 <field name="state"/>
                                 <field name="monthly_amount"/>
