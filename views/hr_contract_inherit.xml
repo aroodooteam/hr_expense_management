@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Root Menus -->
+        <!-- Contract View -->
+        <record id="hr_contract_form_inherit_r1" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.inherit.r1</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <page string="Information" name="information" position="after">
+                    <page string ='Avantages hors bulletin'>
+                        <separator string="Avantages attribués" colspan="2"/>
+                        <field name="employee_advantage_line_ids" colspan="4" nolabel="1"
+                                   context="{'default_adv_contract_id': active_id}">
+                                <tree editable="top">
+                                    <!--field name="annee"/-->
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                    <field name="advanced_amount"/>
+                                    <field name="remaining_balance"/>
+                                    <field name="monthly_amount"/>
+                                    <!--field name="state"/>
+                                    <field name="ref"/-->
+                                </tree>
+                                <form>
+                                    <group col="2" colspan="4">
+                                        <field name="annee"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="advanced_amount"/>
+                                        <field name="remaining_amount"/>
+                                        <field name="monthly_amount"/>
+                                        <field name="state"/>
+                                        <field name="ref"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <group col="2" colspan="2">
+                                <field name="fonction_mensuelle"/>
+                                <field name="representation_mensuelle"/>
+                                <field name="telephone_mensuelle"/>
+                                <field name="voiture_mensuelle"/>
+                            </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>

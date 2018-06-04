@@ -5,10 +5,13 @@ from openerp.exceptions import Warning, ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
+
 class HrEmployeeAdvantageLine(models.Model):
     _name = 'hr.employee.advantage.line'
     _description = u'Détail des avantages attribués'
 
+    contract_id = fields.Many2one('hr.contract',string='Contrat')
+    adv_contract_id = fields.Many2one('hr.contract',string='Contrat')
     employee_id = fields.Many2one('hr.employee.advantage', string=u'Employé')
     annee = fields.Char(related='employee_id.annee',string=u'Année',readonly=True, store=True)
     name = fields.Many2one('hr.employee.advantage.type',string='Avantage')
@@ -57,7 +60,7 @@ class HrEmployeeAdvantageLine(models.Model):
                     i=i+1
                     montant.advanced_amount=count
                     #montant.advanced_amount_corrected=montant.advanced_amount
-        
+
 
     @api.depends('amount','advanced_amount')
     @api.multi
@@ -77,7 +80,7 @@ class HrEmployeeAdvantageLine(models.Model):
             else:
                 montant.remaining_balance=montant.amount
 
-            
+
     @api.multi
     def is_current_user(self):
         for emp in self:
@@ -100,10 +103,54 @@ class HrEmployeeAdvantageLine(models.Model):
     def _onchange_amount(self):
         for montant in self:
             montant.monthly_amount = montant.amount/12
-    
+
 
     #@api.multi
     @api.depends('officer_id')
     def get_user_request_id (self):
         for emp_request in self:
             emp_request.user_request_id = emp_request.officer_id
+
+
+class HrContract(models.Model):
+    _inherit = 'hr.contract'
+    _description = 'Rajout des avantages hors bulletin dans la table contrat'
+
+    employee_advantage_line_ids = fields.One2many('hr.employee.advantage.line','adv_contract_id',string='Avantage hors bulletin')
+    fonction_mensuelle = fields.Float(string='Fonction mensuelle', store=True)
+    representation_mensuelle = fields.Float(string='Representation mensuelle',readonly=True,default=0.0, store=True,digits=(8, 2))
+    voiture_mensuelle = fields.Float(string='Voiture mensuelle',readonly=True,default=0.0, store=True,digits=(8, 2))
+    telephone_mensuelle = fields.Float(string=u'Téléphone mensuelle',readonly=True,default=0.0, store=True,digits=(8, 2))
+
+    @api.onchange('employee_advantage_line_ids')
+    def update_get_monthly_amount(self):
+        _logger.info('\n=== ctx = %s ===\n' % self._context)
+        _logger.info('\n=== line_ids = %s ===\n' % self.employee_advantage_line_ids)
+        ctt_obj = self.browse([self._context.get('default_adv_contract_id')])
+        _logger.info('\n=== ctt_obj = %s ===\n' % ctt_obj)
+        vals = {}
+        for advantage_line_id in ctt_obj.employee_advantage_line_ids:
+            _logger.info("\n === FONCTION = %s" %advantage_line_id.adv_contract_id)
+            if advantage_line_id.name.id == 1:
+                vals['fonction_mensuelle'] = advantage_line_id.monthly_amount
+                #self.fonction_mensuelle=advantage_line_id.monthly_amount
+                ctt_obj.write(vals)
+            elif advantage_line_id.name.id == 2:
+                 vals['representation_mensuelle'] = advantage_line_id.monthly_amount
+                #self.representation_mensuelle=advantage_line_id.monthly_amount
+                 ctt_obj.write(vals)
+            elif advantage_line_id.name.id == 3:
+                 vals['telephone_mensuelle'] = advantage_line_id.monthly_amount
+                #self.representation_mensuelle=advantage_line_id.monthly_amount
+                 ctt_obj.write(vals)
+            elif advantage_line_id.name.id == 4:
+                 vals['voiture_mensuelle'] = advantage_line_id.monthly_amount
+                #self.representation_mensuelle=advantage_line_id.monthly_amount
+                 ctt_obj.write(vals)
+            _logger.info('\n=== vals = %s => %s ===\n' % (vals, self))
+            #ctt_obj.write(vals)
+
+
+
+
+
