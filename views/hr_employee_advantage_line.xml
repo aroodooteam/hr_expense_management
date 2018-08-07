@@ -46,9 +46,17 @@
                                 <field name="advanced_amount"/>
                                 <!--field name="advanced_amount_corrected"/-->
                                 <!--field name="remaining_amount"/-->
-                                <field name="remaining_balance"/>
+                                <!--field name="remaining_balance"/-->
+                                <field name="current_balance"/>
                                 <field name="state"/>
                                 <field name="monthly_amount"/>
+                            </group>                            
+                            <group col="2" colspan="2">
+                                <button name="get_balance" 
+                                             class="oe_inline oe_stat_button" 
+                                             string="Solde" 
+                                             type="object" 
+                                             icon="fa-gears"/>
                             </group>
                         <notebook>
                             <page string="Avantages demandés">

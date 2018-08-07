@@ -47,7 +47,7 @@
                                         <h4>Situation du compte:</h4>
                                         <p><b>Montant attribué:</b> <span t-field="doc.amount"/></p>
                                         <p><b>Montant avancé:</b> <span t-field="doc.advanced_amount"/></p>
-                                        <p><b>Montant restant:</b> <span t-field="doc.remaining_amount"/></p>
+                                        <p><b>Montant restant:</b> <span t-field="doc.current_balance"/></p>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                         <div>
                                             <div class = "col-xs-2 text-left"><b>Envoyé le</b></div>
                                             <div class = "col-xs-2 text-left"><b>Numéro CR</b></div>
-                                            <div class = "col-xs-2 text-left"><b>Montant demandé</b></div>
+                                            <div class = "col-xs-2 text-left"><b>Montant accordé</b></div>
                                             <div class = "col-xs-6 text-left"><b>Motif</b></div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                                 <span t-field="demande.cr_number"/>
                                             </div>
                                             <div class="col-xs-2 text-left">
-                                                <span t-field="demande.request_amount"/>
+                                                <span t-field="demande.drh_awarded_amount"/>
                                             </div>
                                             <div class="col-xs-6 text-left">
                                                 <span t-field="demande.observation"/>

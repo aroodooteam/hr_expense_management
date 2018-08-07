@@ -21,6 +21,7 @@ class HrEmployeeAdvantageLine(models.Model):
     #advanced_amount_corrected = fields.Float(string=u'Montant avancé corrigé',digits=(8, 2),compute='get_advanced_amount')
     remaining_amount = fields.Float(string='Montant restant',digits=(8, 2),compute='get_remaining_amount',store=True)
     remaining_balance = fields.Float(string=u'Montant restant',digits=(8, 2),compute='get_remaining_balance',store=True)
+    current_balance = fields.Float(string=u'Montant restant',digits=(8, 2),store=True)
     monthly_amount = fields.Float(string='Montant mensuel',readonly=False,default=0.0, store=True,digits=(8, 2), compute='_onchange_amount')
     state = fields.Selection((('add', 'Attribuer'), ('remove', 'Consommer'), ('cancel', 'Annuler')), 'Action')
     ref = fields.Char(string=u'Référence')
@@ -61,6 +62,14 @@ class HrEmployeeAdvantageLine(models.Model):
                     montant.advanced_amount=count
                     #montant.advanced_amount_corrected=montant.advanced_amount
 
+
+    @api.multi
+    def get_balance(self):
+        for montant in self:
+            if montant.advanced_amount != 0:
+                montant.current_balance=montant.amount-montant.advanced_amount
+            else:
+                montant.current_balance=montant.amount
 
     @api.depends('amount','advanced_amount')
     @api.multi
@@ -131,19 +140,23 @@ class HrContract(models.Model):
         vals = {}
         for advantage_line_id in ctt_obj.employee_advantage_line_ids:
             _logger.info("\n === FONCTION = %s" %advantage_line_id.adv_contract_id)
-            if advantage_line_id.name.id == 1:
+            code_fonction=advantage_line_id.name.search([('code','=','F')]).id
+            code_representation=advantage_line_id.name.search([('code','=','R')]).id
+            code_telephone=advantage_line_id.name.search([('code','=','T')]).id
+            code_voiture=advantage_line_id.name.search([('code','=','V')]).id
+            if advantage_line_id.name.id == code_fonction:
                 vals['fonction_mensuelle'] = advantage_line_id.monthly_amount
                 #self.fonction_mensuelle=advantage_line_id.monthly_amount
                 ctt_obj.write(vals)
-            elif advantage_line_id.name.id == 2:
+            elif advantage_line_id.name.id == code_representation:
                  vals['representation_mensuelle'] = advantage_line_id.monthly_amount
                 #self.representation_mensuelle=advantage_line_id.monthly_amount
                  ctt_obj.write(vals)
-            elif advantage_line_id.name.id == 3:
+            elif advantage_line_id.name.id == code_telephone:
                  vals['telephone_mensuelle'] = advantage_line_id.monthly_amount
                 #self.representation_mensuelle=advantage_line_id.monthly_amount
                  ctt_obj.write(vals)
-            elif advantage_line_id.name.id == 4:
+            elif advantage_line_id.name.id == code_voiture:
                  vals['voiture_mensuelle'] = advantage_line_id.monthly_amount
                 #self.representation_mensuelle=advantage_line_id.monthly_amount
                  ctt_obj.write(vals)
