@@ -52,7 +52,8 @@
                             <separator string="Situation du compte" colspan="2"/>
                             <field name="amount"/>
                             <field name="advanced_amount"/>
-                            <field name="remaining_amount"/>
+                            <!--field name="remaining_amount"/-->
+                            <field name="current_balance"/>
                         </group>
                         <notebook colspan="4">
                             <page string="Demande">

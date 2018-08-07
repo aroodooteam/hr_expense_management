@@ -34,6 +34,7 @@ class HrEmployeeAdvantageRequest(models.Model):
     amount = fields.Float(related='employee_id.amount',string=u'Montant attribué',digits=(8, 2),readonly=True)
     advanced_amount = fields.Float(related='employee_id.advanced_amount',string=u'Montant avancé',digits=(8, 2))
     remaining_amount = fields.Float(related='employee_id.remaining_amount',string='Montant restant',digits=(8, 2))
+    current_balance = fields.Float(related='employee_id.current_balance',string='Montant restant',digits=(8, 2),readonly=True,store=True)
     date = fields.Datetime(string=u'Envoyé le',required=True)
     cr_number = fields.Char(string=u'Numéro CR')
     request_amount = fields.Float(string=u'Montant demandé',required=True)

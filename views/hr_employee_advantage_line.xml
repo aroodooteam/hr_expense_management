@@ -14,7 +14,7 @@
                     <field name="name"/>
                     <field name="amount"/>
                     <field name="advanced_amount"/>
-                    <field name="remaining_amount"/>
+                    <field name="current_balance"/>
                     <field name="state"/>
                 </tree>
             </field>
