@@ -110,6 +110,14 @@ class HrEmployeeAdvantageRequest(models.Model):
     def _onchange_employee_id(self):
         self.emp_id=self.employee_id.officer_id
 
+    @api.multi
+    def get_balance(self):
+        for montant in self:
+            if montant.employee_id.advanced_amount != 0:
+                montant.employee_id.current_balance=montant.employee_id.amount-montant.employee_id.advanced_amount
+            else:
+                montant.employee_id.current_balance=montant.employee_id.amount
+
 
     #@api.constrains('request_amount')
     #def _check_request_amount(self):
