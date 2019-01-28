@@ -39,6 +39,7 @@
                             <field name="employee_user_id"/>
                             <field name="officer_id"/>
                             <field name="current_user"/>
+                            <field name="active"/>
                         </group>
                             <separator string="Situation du compte" colspan="2"/>
                             <group col="4" colspan="4">
@@ -106,6 +107,9 @@
                     <field name="advanced_amount"/>
                     <field name="remaining_amount"/>
                     <field name="state"/>
+                    <filter name="filter_see_all" string="All" domain="['|',('active','=',True),('active','=',False)]"/>
+                    <filter name="filter_see_active" string="Active" domain="[('active','=',True)]"/>
+                    <filter name="filter_see_inactive" string="Inactive" domain="[('active','=',False)]"/>
                         <group string="Group By…">
                         <filter string="Année" name="group_annee" icon="terp-personal" domain="[]"
                             context="{'group_by':'annee'}"/>

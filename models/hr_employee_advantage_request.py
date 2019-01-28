@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class HrEmployeeAdvantageRequest(models.Model):
     _name = 'hr.employee.advantage.request'
+    _rec_name='emp_id'
     _description = u'Gérer les demandes d avantages'
 
     def get_emp_id(self):

@@ -45,6 +45,7 @@ class HrEmployeeAdvantage(models.Model):
     current_user_id= fields.Boolean(string='Current user', compute='is_current_user')
     #active_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
     employee_request_id = fields.Many2one('res.users', string='Active User', default=lambda self: self.env.user)
+    active = fields.Boolean(string='Actif', default=True)
     #_sql_constraints = [('name_uniq', 'unique(name)', _('The name must be unique !'))]
     _sql_constraints = [('name_annee_uniq', 'unique(annee,name)', _(u'Vous avez déja saisi les avantages de cet employé !'))]
 

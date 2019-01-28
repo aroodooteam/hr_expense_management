@@ -30,6 +30,7 @@ class HrEmployeeAdvantageLine(models.Model):
     current_user= fields.Boolean(string='Current user', compute='is_current_user')
     officer_id = fields.Many2one(related='employee_id.name',string='Employee ID',store=True)
     user_request_id = fields.Integer(string='User request id', compute='get_user_request_id',store=True)
+    active = fields.Boolean(string='Actif', default=True)
     #emp_id = fields.Many2one('hr.employee',string='Nom Emp',default=get_emp_id)
     #test_employee_id = fields.Integer(string='Employee ID')
 

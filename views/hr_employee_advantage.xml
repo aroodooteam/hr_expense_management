@@ -38,6 +38,7 @@
                                 <field name="department_id"/>
                                 <field name="user_id"/>
                                 <field name="current_user_id"/>
+                                <field name="active"/>
                             </group>
                             <separator string="Avantages attribués" colspan="2"/>
                             <field name="employee_advantage_line_ids" colspan="4" nolabel="1" 
@@ -81,6 +82,9 @@
                     <field name="annee"/>
                     <field name="matricule"/>
                     <field name="name"/>
+                    <filter name="filter_see_all" string="All" domain="['|',('active','=',True),('active','=',False)]"/>
+                    <filter name="filter_see_active" string="Active" domain="[('active','=',True)]"/>
+                    <filter name="filter_see_inactive" string="Inactive" domain="[('active','=',False)]"/>
                     <!--field name="branche_id"/>
                     <field name="module_id"/-->
                         <group string="Group By…">
